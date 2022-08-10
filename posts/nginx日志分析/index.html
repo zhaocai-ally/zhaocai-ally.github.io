@@ -1,0 +1,444 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>nginx日志分析 | 赵才个人博客</title><meta name="keywords" content="生活，音乐，视频，照片，日志，技术分享，教程，互联网，博客"><meta name="author" content="赵 才"><meta name="copyright" content="赵 才"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1.Nginx访问日志中 按照ip请求次数统计命令（必备）1cat access.log |awk &amp;#x27;&amp;#123;print $1&amp;#125;&amp;#x27;|sort -nr |uniq -c |sort -nr |more 2.统计IP访问量（独立ip访问数量）12awk &amp;#x27;&amp;#123;print $1&amp;#125;&amp;#x27; access.log | sort -n | un">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx日志分析">
+<meta property="og:url" content="http://www.zhaocai.live:8889/posts/nginx%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/">
+<meta property="og:site_name" content="赵才个人博客">
+<meta property="og:description" content="1.Nginx访问日志中 按照ip请求次数统计命令（必备）1cat access.log |awk &amp;#x27;&amp;#123;print $1&amp;#125;&amp;#x27;|sort -nr |uniq -c |sort -nr |more 2.统计IP访问量（独立ip访问数量）12awk &amp;#x27;&amp;#123;print $1&amp;#125;&amp;#x27; access.log | sort -n | un">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.zhaocai.live:8888/photo/h.jpg">
+<meta property="article:published_time" content="2022-06-15T11:34:10.000Z">
+<meta property="article:modified_time" content="2022-06-15T11:34:10.000Z">
+<meta property="article:author" content="赵 才">
+<meta property="article:tag" content="生活，音乐，视频，照片，日志，技术分享，教程，互联网，博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.zhaocai.live:8888/photo/h.jpg"><link rel="shortcut icon" href="http://www.zhaocai.live:8888/photo/tou.png"><link rel="canonical" href="http://www.zhaocai.live:8889/posts/nginx%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":1,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  noticeOutdate: {"limitDay":100,"position":"top","messagePrev":"距离上次更新已经过了","messageNext":"天，文章所描述的內容可能已经发生变化，请留意。"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 赵 才","link":"链接: ","source":"来源: 赵才个人博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://fastly.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://fastly.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'nginx日志分析',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-06-15 19:34:10'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><style type="text/css">.card-announcement .social-button{margin:.6rem 0 0 0;text-align:center}.card-announcement .social-button a{display:block;background-color:var(--btn-bg);color:var(--btn-color);text-align:center;line-height:2.4;margin:4px 0}.card-announcement .social-button a:hover{background-color:var(--btn-hover-color)}</style><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="赵才个人博客" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/photo/tou.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E8%AE%B0%E5%BD%95/"><i class="fa-fw fas fa-tint"></i><span> 生活</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div><div class="menus_item"><a class="site-page" href="/video/"><i class="fa-fw fas fa-video"></i><span> 视频</span></a></div><div class="menus_item"><a class="site-page" href="/MV/"><i class="fa-fw fas fa-film"></i><span> 音乐MV</span></a></div><div class="menus_item"><a class="site-page" href="/mv%E8%BD%BB%E9%9F%B3%E4%B9%90/"><i class="fa-fw fas fa-music"></i><span> 轻音乐</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comment-dots"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('http://www.zhaocai.live:8888/photo/h.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">赵才个人博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E8%AE%B0%E5%BD%95/"><i class="fa-fw fas fa-tint"></i><span> 生活</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div><div class="menus_item"><a class="site-page" href="/video/"><i class="fa-fw fas fa-video"></i><span> 视频</span></a></div><div class="menus_item"><a class="site-page" href="/MV/"><i class="fa-fw fas fa-film"></i><span> 音乐MV</span></a></div><div class="menus_item"><a class="site-page" href="/mv%E8%BD%BB%E9%9F%B3%E4%B9%90/"><i class="fa-fw fas fa-music"></i><span> 轻音乐</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comment-dots"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">nginx日志分析<a class="post-edit-link" href="https://gitee.com/zhaocaiall/personal-blog/tree/master/source/_posts/nginx日志分析.md" rel="external nofollow noreferrer" title="编辑" target="_blank"><i class="fas fa-pencil-alt"></i></a></h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2022-06-15T11:34:10.000Z" title="发表于 2022-06-15 19:34:10">2022-06-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="nginx日志分析"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="1-Nginx访问日志中-按照ip请求次数统计命令（必备）"><a href="#1-Nginx访问日志中-按照ip请求次数统计命令（必备）" class="headerlink" title="1.Nginx访问日志中 按照ip请求次数统计命令（必备）"></a>1.Nginx访问日志中 按照ip请求次数统计命令（必备）</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> access.log |awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span>|<span class="built_in">sort</span> -nr |<span class="built_in">uniq</span> -c |<span class="built_in">sort</span> -nr |more</span><br></pre></td></tr></table></figure>
+<h1 id="2-统计IP访问量（独立ip访问数量）"><a href="#2-统计IP访问量（独立ip访问数量）" class="headerlink" title="2.统计IP访问量（独立ip访问数量）"></a>2.统计IP访问量（独立ip访问数量）</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> access.log | <span class="built_in">sort</span> -n | <span class="built_in">uniq</span> | <span class="built_in">wc</span> -l</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="3-查看某一时间段的IP访问量-4-5点"><a href="#3-查看某一时间段的IP访问量-4-5点" class="headerlink" title="3.查看某一时间段的IP访问量(4-5点)"></a>3.查看某一时间段的IP访问量(4-5点)</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">&quot;07/Apr/2017:0[4-5]&quot;</span> access.log | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> | <span class="built_in">sort</span> | <span class="built_in">uniq</span> -c| <span class="built_in">sort</span> -nr | <span class="built_in">wc</span> -l  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="4-查看访问最频繁的前100个IP-必备"><a href="#4-查看访问最频繁的前100个IP-必备" class="headerlink" title="4.查看访问最频繁的前100个IP  (必备)"></a><strong>4.查看访问最频繁的前100个IP  (必备)</strong></h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> access.log | <span class="built_in">sort</span> -n |<span class="built_in">uniq</span> -c | <span class="built_in">sort</span> -rn | <span class="built_in">head</span> -n 100</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="5-查看访问100次以上的IP"><a href="#5-查看访问100次以上的IP" class="headerlink" title="5.查看访问100次以上的IP"></a>5.查看访问100次以上的IP</h1>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> access.log | <span class="built_in">sort</span> -n |<span class="built_in">uniq</span> -c |awk <span class="string">&#x27;&#123;if($1 &gt;100) print $0&#125;&#x27;</span>|<span class="built_in">sort</span> -rn</span><br></pre></td></tr></table></figure>
+<h1 id="6-查询某个IP的详细访问情况-按访问频率排序"><a href="#6-查询某个IP的详细访问情况-按访问频率排序" class="headerlink" title="6.查询某个IP的详细访问情况,按访问频率排序"></a>6.查询某个IP的详细访问情况,按访问频率排序</h1>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">&#x27;127.0.01&#x27;</span> access.log |awk <span class="string">&#x27;&#123;print $7&#125;&#x27;</span>|<span class="built_in">sort</span> |<span class="built_in">uniq</span> -c |<span class="built_in">sort</span> -rn |<span class="built_in">head</span> -n 100</span><br></pre></td></tr></table></figure>
+<h1 id="7-查看访问最频的页面-TOP100"><a href="#7-查看访问最频的页面-TOP100" class="headerlink" title="7.查看访问最频的页面(TOP100)"></a>7.查看访问最频的页面(TOP100)</h1>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;&#123;print $7&#125;&#x27;</span> access.log | <span class="built_in">sort</span> |<span class="built_in">uniq</span> -c | <span class="built_in">sort</span> -rn | <span class="built_in">head</span> -n 100</span><br></pre></td></tr></table></figure>
+<h1 id="8-查看访问最频的页面-排除php页面】-TOP100"><a href="#8-查看访问最频的页面-排除php页面】-TOP100" class="headerlink" title="8.查看访问最频的页面([排除php页面】(TOP100)"></a>8.查看访问最频的页面([排除php页面】(TOP100)</h1>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -v <span class="string">&quot;.php&quot;</span>  access.log | awk <span class="string">&#x27;&#123;print $7&#125;&#x27;</span> | <span class="built_in">sort</span> |<span class="built_in">uniq</span> -c | <span class="built_in">sort</span> -rn | <span class="built_in">head</span> -n 100 </span><br></pre></td></tr></table></figure>
+<h1 id="9-查看页面访问次数超过100次的页面"><a href="#9-查看页面访问次数超过100次的页面" class="headerlink" title="9.查看页面访问次数超过100次的页面"></a>9.查看页面访问次数超过100次的页面</h1>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> access.log | <span class="built_in">cut</span> -d <span class="string">&#x27; &#x27;</span> -f 7 | <span class="built_in">sort</span> |<span class="built_in">uniq</span> -c | awk <span class="string">&#x27;&#123;if ($1 &gt; 100) print $0&#125;&#x27;</span> | less</span><br></pre></td></tr></table></figure>
+<h1 id="10-查看最近1000条记录，访问量最高的页面"><a href="#10-查看最近1000条记录，访问量最高的页面" class="headerlink" title="10.查看最近1000条记录，访问量最高的页面"></a>10.查看最近1000条记录，访问量最高的页面</h1>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tail</span> -1000 access.log |awk <span class="string">&#x27;&#123;print $7&#125;&#x27;</span>|<span class="built_in">sort</span>|<span class="built_in">uniq</span> -c|<span class="built_in">sort</span> -nr|less</span><br></pre></td></tr></table></figure>
+<h1 id="11-统计每秒的请求数-top100的时间点-精确到秒"><a href="#11-统计每秒的请求数-top100的时间点-精确到秒" class="headerlink" title="11.统计每秒的请求数,top100的时间点(精确到秒)"></a>11.统计每秒的请求数,top100的时间点(精确到秒)</h1>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;&#123;print $4&#125;&#x27;</span> access.log |<span class="built_in">cut</span> -c 14-21|<span class="built_in">sort</span>|<span class="built_in">uniq</span> -c|<span class="built_in">sort</span> -nr|<span class="built_in">head</span> -n 100<span class="string">&#x27;</span></span><br></pre></td></tr></table></figure>
+<h1 id="12-统计每分钟的请求数-top100的时间点-精确到分钟"><a href="#12-统计每分钟的请求数-top100的时间点-精确到分钟" class="headerlink" title="12.统计每分钟的请求数,top100的时间点(精确到分钟)"></a>12.统计每分钟的请求数,top100的时间点(精确到分钟)</h1>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;&#123;print $4&#125;&#x27;</span> access.log |<span class="built_in">cut</span> -c 14-18|<span class="built_in">sort</span>|<span class="built_in">uniq</span> -c|<span class="built_in">sort</span> -nr|<span class="built_in">head</span> -n 100</span><br></pre></td></tr></table></figure>
+<h1 id="13-统计每小时的请求数-top100的时间点-精确到小时"><a href="#13-统计每小时的请求数-top100的时间点-精确到小时" class="headerlink" title="13.统计每小时的请求数,top100的时间点(精确到小时)"></a>13.统计每小时的请求数,top100的时间点(精确到小时)</h1>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;&#123;print $4&#125;&#x27;</span> access.log |<span class="built_in">cut</span> -c 14-15|<span class="built_in">sort</span>|<span class="built_in">uniq</span> -c|<span class="built_in">sort</span> -nr|<span class="built_in">head</span> -n 100</span><br></pre></td></tr></table></figure>
+<h1 id="14-性能分析-在nginx-log中最后一个字段加入-request-time"><a href="#14-性能分析-在nginx-log中最后一个字段加入-request-time" class="headerlink" title="14.性能分析,在nginx log中最后一个字段加入$request_time"></a>14.性能分析,在nginx log中最后一个字段加入$request_time</h1><h3 id="列出传输时间超过-3-秒的页面，显示前20条"><a href="#列出传输时间超过-3-秒的页面，显示前20条" class="headerlink" title="列出传输时间超过 3 秒的页面，显示前20条"></a>列出传输时间超过 3 秒的页面，显示前20条</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> access.log|awk <span class="string">&#x27;($NF &gt; 3)&#123;print $7&#125;&#x27;</span>|<span class="built_in">sort</span> -n|<span class="built_in">uniq</span> -c|<span class="built_in">sort</span> -nr|<span class="built_in">head</span> -20</span><br></pre></td></tr></table></figure>
+<h3 id="列出php页面请求时间超过3秒的页面，并统计其出现的次数，显示前100条"><a href="#列出php页面请求时间超过3秒的页面，并统计其出现的次数，显示前100条" class="headerlink" title="列出php页面请求时间超过3秒的页面，并统计其出现的次数，显示前100条"></a>列出php页面请求时间超过3秒的页面，并统计其出现的次数，显示前100条</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> access.log|awk <span class="string">&#x27;($NF &gt; 1 &amp;&amp;  $7~/.php/)&#123;print $7&#125;&#x27;</span>|<span class="built_in">sort</span> -n|<span class="built_in">uniq</span> -c|<span class="built_in">sort</span> -nr|<span class="built_in">head</span> -100</span><br></pre></td></tr></table></figure>
+<h1 id="15-统计蜘蛛抓取次数"><a href="#15-统计蜘蛛抓取次数" class="headerlink" title="15.统计蜘蛛抓取次数"></a>15.统计蜘蛛抓取次数</h1>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">&#x27;Baiduspider&#x27;</span> access.log |<span class="built_in">wc</span> -l</span><br></pre></td></tr></table></figure>
+<h1 id="16-统计蜘蛛抓取404的次数"><a href="#16-统计蜘蛛抓取404的次数" class="headerlink" title="16.统计蜘蛛抓取404的次数"></a>16.统计蜘蛛抓取404的次数</h1>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">&#x27;Baiduspider&#x27;</span> access.log |grep <span class="string">&#x27;404&#x27;</span> | <span class="built_in">wc</span> -l</span><br></pre></td></tr></table></figure>
+<h1 id="17-TCP连接统计-查看当前TCP连接数"><a href="#17-TCP连接统计-查看当前TCP连接数" class="headerlink" title="17.TCP连接统计,查看当前TCP连接数"></a>17.TCP连接统计,查看当前TCP连接数</h1>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -tan | grep <span class="string">&quot;ESTABLISHED&quot;</span> | grep <span class="string">&quot;:80&quot;</span> | <span class="built_in">wc</span> -l</span><br></pre></td></tr></table></figure>
+<h1 id="18-用tcpdump嗅探80端口的访问看看谁最高"><a href="#18-用tcpdump嗅探80端口的访问看看谁最高" class="headerlink" title="18.用tcpdump嗅探80端口的访问看看谁最高"></a>18.用tcpdump嗅探80端口的访问看看谁最高</h1>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i eth0 -tnn dst port 80 -c 1000 | awk -F<span class="string">&quot;.&quot;</span> <span class="string">&#x27;&#123;print $1&quot;.&quot;$2&quot;.&quot;$3&quot;.&quot;$4&#125;&#x27;</span> | <span class="built_in">sort</span>| <span class="built_in">uniq</span> -c | <span class="built_in">sort</span> -nr</span><br></pre></td></tr></table></figure>
+<h3 id="实例脚本："><a href="#实例脚本：" class="headerlink" title="实例脚本："></a>实例脚本：</h3><h3 id="获取前一分钟nginx访问日志条数"><a href="#获取前一分钟nginx访问日志条数" class="headerlink" title="获取前一分钟nginx访问日志条数"></a>获取前一分钟nginx访问日志条数</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">export</span> LANG=C</span><br><span class="line"><span class="built_in">export</span> PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin</span><br><span class="line">TIME=$(<span class="built_in">date</span> -d <span class="string">&quot;1 minute ago&quot;</span> +<span class="string">&quot;%d/%h/%Y:%H:%M&quot;</span>)</span><br><span class="line">  </span><br><span class="line">grep <span class="string">&quot;<span class="variable">$TIME</span>&quot;</span> /var/log/nginx/access.log | <span class="built_in">wc</span> -l</span><br></pre></td></tr></table></figure>
+<h3 id="获取前一分钟nginx错误日志条数"><a href="#获取前一分钟nginx错误日志条数" class="headerlink" title="获取前一分钟nginx错误日志条数"></a>获取前一分钟nginx错误日志条数</h3>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">export</span> LANG=C</span><br><span class="line"><span class="built_in">export</span> PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin</span><br><span class="line">TIME=$(<span class="built_in">date</span> -d <span class="string">&quot;1 minute ago&quot;</span> +<span class="string">&quot;%Y-%m-%d %H:%M&quot;</span>)</span><br><span class="line">  </span><br><span class="line">grep <span class="string">&quot;<span class="variable">$TIME</span>&quot;</span> /var/log/nginx/error.log | <span class="built_in">wc</span> -l</span><br></pre></td></tr></table></figure>
+<h3 id="1、查询访问最频繁的IP-倒序排序列表"><a href="#1、查询访问最频繁的IP-倒序排序列表" class="headerlink" title="1、查询访问最频繁的IP 倒序排序列表"></a>1、查询访问最频繁的IP 倒序排序列表</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> access*.<span class="built_in">log</span>|<span class="built_in">sort</span> | <span class="built_in">uniq</span> -c |<span class="built_in">sort</span> -n -k 1 -r|more</span><br></pre></td></tr></table></figure>
+<h3 id="2、根据时间段统计查看日志"><a href="#2、根据时间段统计查看日志" class="headerlink" title="2、根据时间段统计查看日志"></a>2、根据时间段统计查看日志</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> access.log| sed -n <span class="string">&#x27;/14/Mar/2015:21/,/14/Mar/2015:22/p&#x27;</span>|more</span><br></pre></td></tr></table></figure>
+<h3 id="3、每秒客户端请求数-TOP5"><a href="#3、每秒客户端请求数-TOP5" class="headerlink" title="3、每秒客户端请求数 TOP5"></a>3、每秒客户端请求数 TOP5</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk -F<span class="string">&#x27;[ []&#x27;</span> <span class="string">&#x27;&#123;print $5&#125;&#x27;</span> access.log|<span class="built_in">sort</span>|<span class="built_in">uniq</span> -c|<span class="built_in">sort</span> -rn|<span class="built_in">head</span> -5</span><br></pre></td></tr></table></figure>
+<h3 id="4、访问最频繁IP-Top5"><a href="#4、访问最频繁IP-Top5" class="headerlink" title="4、访问最频繁IP Top5"></a>4、访问最频繁IP Top5</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> access.log|<span class="built_in">sort</span> |<span class="built_in">uniq</span> -c | <span class="built_in">sort</span> -rn |<span class="built_in">head</span> -5</span><br></pre></td></tr></table></figure>
+<h3 id="5、访问最频繁的URL-TOP5"><a href="#5、访问最频繁的URL-TOP5" class="headerlink" title="5、访问最频繁的URL TOP5"></a>5、访问最频繁的URL TOP5</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;&#123;print $7&#125;&#x27;</span> access.log|<span class="built_in">sort</span> |<span class="built_in">uniq</span> -c | <span class="built_in">sort</span> -rn |<span class="built_in">head</span> -5</span><br></pre></td></tr></table></figure>
+<h3 id="6、响应大于10秒的URL-TOP5"><a href="#6、响应大于10秒的URL-TOP5" class="headerlink" title="6、响应大于10秒的URL TOP5"></a>6、响应大于10秒的URL TOP5</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;&#123;if ($12 &gt; 10)&#123;print $7&#125;&#125;&#x27;</span> access.log|<span class="built_in">sort</span>|<span class="built_in">uniq</span> -c|<span class="built_in">sort</span> -rn |<span class="built_in">head</span> -5</span><br></pre></td></tr></table></figure>
+<h3 id="7、HTTP状态码-非200-统计-Top5"><a href="#7、HTTP状态码-非200-统计-Top5" class="headerlink" title="7、HTTP状态码(非200)统计 Top5"></a>7、HTTP状态码(非200)统计 Top5</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;&#123;if ($13 != 200)&#123;print $13&#125;&#125;&#x27;</span> access.log|<span class="built_in">sort</span>|<span class="built_in">uniq</span> -c|<span class="built_in">sort</span> -rn|<span class="built_in">head</span> -5</span><br></pre></td></tr></table></figure>
+<h3 id="8、分析请求数大于50000的源IP的行为"><a href="#8、分析请求数大于50000的源IP的行为" class="headerlink" title="8、分析请求数大于50000的源IP的行为"></a>8、分析请求数大于50000的源IP的行为</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> access.log|<span class="built_in">sort</span> |<span class="built_in">uniq</span> -c |<span class="built_in">sort</span> -rn|awk <span class="string">&#x27;&#123;if ($1 &gt; 50000)&#123;print $2&#125;&#125;&#x27;</span> &gt; tmp.txt </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(<span class="built_in">cat</span> tmp.txt) </span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"> <span class="built_in">echo</span> <span class="variable">$i</span> &gt;&gt; analysis.txt </span><br><span class="line"> <span class="built_in">echo</span> <span class="string">&quot;访问行为统计&quot;</span> &gt;&gt; analysis.txt </span><br><span class="line"> grep <span class="variable">$i</span> access.log|awk <span class="string">&#x27;&#123;print $6&#125;&#x27;</span> |<span class="built_in">sort</span> |<span class="built_in">uniq</span> -c | <span class="built_in">sort</span> -rn |<span class="built_in">head</span> -5 &gt;&gt; analysis.txt </span><br><span class="line"> <span class="built_in">echo</span> <span class="string">&quot;访问接口统计&quot;</span> &gt;&gt; analysis.txt </span><br><span class="line"> grep <span class="variable">$i</span> access.log|awk <span class="string">&#x27;&#123;print $7&#125;&#x27;</span> |<span class="built_in">sort</span> |<span class="built_in">uniq</span> -c | <span class="built_in">sort</span> -rn |<span class="built_in">head</span> -5 &gt;&gt; analysis.txt </span><br><span class="line"> <span class="built_in">echo</span> -e <span class="string">&quot; &quot;</span> &gt;&gt; /root/analysis/<span class="variable">$Ydate</span>.txt </span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<h4 id="注：如果源IP来自代理服务器，应将第一条命令过滤地址改为-http-x-forwarded-for地址"><a href="#注：如果源IP来自代理服务器，应将第一条命令过滤地址改为-http-x-forwarded-for地址" class="headerlink" title="注：如果源IP来自代理服务器，应将第一条命令过滤地址改为$http_x_forwarded_for地址"></a>注：如果源IP来自代理服务器，应将第一条命令过滤地址改为$http_x_forwarded_for地址</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;&#123;print $NF&#125;&#x27;</span> access.log|<span class="built_in">sort</span> |<span class="built_in">uniq</span> -c |<span class="built_in">sort</span> -rn|awk <span class="string">&#x27;&#123;if ($1 &gt; 50000)&#123;print $2&#125;&#125;&#x27;</span> &gt; tmp.txt</span><br></pre></td></tr></table></figure>
+<h1 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h1><h3 id="Nginx日志按日切割后可使用上述命令得出每日网站流量分析概况，然后可以写一个Python脚本读取后发送。也可以将数据导入MySQL然后使用Python绘制曲线。当然使用日志分析系统，如ELK，效果更佳。"><a href="#Nginx日志按日切割后可使用上述命令得出每日网站流量分析概况，然后可以写一个Python脚本读取后发送。也可以将数据导入MySQL然后使用Python绘制曲线。当然使用日志分析系统，如ELK，效果更佳。" class="headerlink" title="Nginx日志按日切割后可使用上述命令得出每日网站流量分析概况，然后可以写一个Python脚本读取后发送。也可以将数据导入MySQL然后使用Python绘制曲线。当然使用日志分析系统，如ELK，效果更佳。"></a>Nginx日志按日切割后可使用上述命令得出每日网站流量分析概况，然后可以写一个Python脚本读取后发送。也可以将数据导入MySQL然后使用Python绘制曲线。当然使用日志分析系统，如ELK，效果更佳。</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ntu | awk ‘&#123;<span class="built_in">print</span> <span class="variable">$5</span>&#125;’ | <span class="built_in">cut</span> -d: -f1 | <span class="built_in">sort</span> | <span class="built_in">uniq</span> -c | <span class="built_in">sort</span> -n </span><br></pre></td></tr></table></figure>
+<h3 id="执行后，将会显示服务器上所有的每个IP多少个连接数。"><a href="#执行后，将会显示服务器上所有的每个IP多少个连接数。" class="headerlink" title="执行后，将会显示服务器上所有的每个IP多少个连接数。"></a>执行后，将会显示服务器上所有的每个IP多少个连接数。</h3></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://www.zhaocai.live:8889">赵 才</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.zhaocai.live:8889/posts/nginx%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/">http://www.zhaocai.live:8889/posts/nginx%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.zhaocai.live:8889" target="_blank">赵才个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="http://www.zhaocai.live:8888/photo/h.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://fastly.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="http://www.zhaocai.live:8888/photo/%E5%BE%AE%E4%BF%A1.png" target="_blank"><img class="post-qr-code-img" src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/photo/%E5%BE%AE%E4%BF%A1.png" alt="微信打赏"/></a><div class="post-qr-code-desc">微信打赏</div></li><li class="reward-item"><a href="http://www.zhaocai.live:8888/photo/%E6%94%AF%E4%BB%98%E5%AE%9D.png" target="_blank"><img class="post-qr-code-img" src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/photo/%E6%94%AF%E4%BB%98%E5%AE%9D.png" alt="支付宝打赏"/></a><div class="post-qr-code-desc">支付宝打赏</div></li><li class="reward-item"><a href="http://www.zhaocai.live:8888/photo/%E5%8A%A0%E5%BE%AE%E4%BF%A1.png" target="_blank"><img class="post-qr-code-img" src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/photo/%E5%8A%A0%E5%BE%AE%E4%BF%A1.png" alt="微信加好友"/></a><div class="post-qr-code-desc">微信加好友</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/mysql%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/photo/h.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">mysql基本操作</div></div></a></div><div class="next-post pull-right"><a href="/posts/cmd%E4%B9%8B%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/photo/i.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">cmd之文件操作</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/photo/tou.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">赵 才</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/zhaocai-ally"><i class="fab fa-github"></i><span>主題 GitHub</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/zhaocai2599@live.cn" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">命由我作，福自己求。</div></div><div class="card-widget card-docs card-categories"><div class="item-headline"><i class="fas fa-car-side"></i><span>文檔目錄</span></div><div class="item-content"><ul class=card-category-list> <li class=card-category-list-item><a class=card-category-list-link href=/posts/21cfbf15/ >🚀 快速開始</a></li> <li class=card-category-list-item><a class=card-category-list-link href=/posts/dc584b87/ >📑 主題頁面</a></li> <li class=card-category-list-item><a class=card-category-list-link href=/posts/4aa8abbe/ >🛠 主題配置-1</a></li> <li class=card-category-list-item><a class=card-category-list-link href=/posts/ceeb73f/ >⚔️ 主題配置-2</a></li> <li class=card-category-list-item><a class=card-category-list-link href=/posts/98d20436/ >❓ 主題問答</a></li> <li class=card-category-list-item><a class=card-category-list-link href=/posts/4073eda/ >⚡️ 進階教程</a></li> <li class=card-category-list-item><a class=card-category-list-link href=/posts/198a4240/ >✨ 更新日誌</a></li> </ul></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Nginx%E8%AE%BF%E9%97%AE%E6%97%A5%E5%BF%97%E4%B8%AD-%E6%8C%89%E7%85%A7ip%E8%AF%B7%E6%B1%82%E6%AC%A1%E6%95%B0%E7%BB%9F%E8%AE%A1%E5%91%BD%E4%BB%A4%EF%BC%88%E5%BF%85%E5%A4%87%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">1.Nginx访问日志中 按照ip请求次数统计命令（必备）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E7%BB%9F%E8%AE%A1IP%E8%AE%BF%E9%97%AE%E9%87%8F%EF%BC%88%E7%8B%AC%E7%AB%8Bip%E8%AE%BF%E9%97%AE%E6%95%B0%E9%87%8F%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">2.统计IP访问量（独立ip访问数量）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E6%9F%A5%E7%9C%8B%E6%9F%90%E4%B8%80%E6%97%B6%E9%97%B4%E6%AE%B5%E7%9A%84IP%E8%AE%BF%E9%97%AE%E9%87%8F-4-5%E7%82%B9"><span class="toc-number">3.</span> <span class="toc-text">3.查看某一时间段的IP访问量(4-5点)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E6%9F%A5%E7%9C%8B%E8%AE%BF%E9%97%AE%E6%9C%80%E9%A2%91%E7%B9%81%E7%9A%84%E5%89%8D100%E4%B8%AAIP-%E5%BF%85%E5%A4%87"><span class="toc-number">4.</span> <span class="toc-text">4.查看访问最频繁的前100个IP  (必备)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-%E6%9F%A5%E7%9C%8B%E8%AE%BF%E9%97%AE100%E6%AC%A1%E4%BB%A5%E4%B8%8A%E7%9A%84IP"><span class="toc-number">5.</span> <span class="toc-text">5.查看访问100次以上的IP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-%E6%9F%A5%E8%AF%A2%E6%9F%90%E4%B8%AAIP%E7%9A%84%E8%AF%A6%E7%BB%86%E8%AE%BF%E9%97%AE%E6%83%85%E5%86%B5-%E6%8C%89%E8%AE%BF%E9%97%AE%E9%A2%91%E7%8E%87%E6%8E%92%E5%BA%8F"><span class="toc-number">6.</span> <span class="toc-text">6.查询某个IP的详细访问情况,按访问频率排序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-%E6%9F%A5%E7%9C%8B%E8%AE%BF%E9%97%AE%E6%9C%80%E9%A2%91%E7%9A%84%E9%A1%B5%E9%9D%A2-TOP100"><span class="toc-number">7.</span> <span class="toc-text">7.查看访问最频的页面(TOP100)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-%E6%9F%A5%E7%9C%8B%E8%AE%BF%E9%97%AE%E6%9C%80%E9%A2%91%E7%9A%84%E9%A1%B5%E9%9D%A2-%E6%8E%92%E9%99%A4php%E9%A1%B5%E9%9D%A2%E3%80%91-TOP100"><span class="toc-number">8.</span> <span class="toc-text">8.查看访问最频的页面([排除php页面】(TOP100)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#9-%E6%9F%A5%E7%9C%8B%E9%A1%B5%E9%9D%A2%E8%AE%BF%E9%97%AE%E6%AC%A1%E6%95%B0%E8%B6%85%E8%BF%87100%E6%AC%A1%E7%9A%84%E9%A1%B5%E9%9D%A2"><span class="toc-number">9.</span> <span class="toc-text">9.查看页面访问次数超过100次的页面</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#10-%E6%9F%A5%E7%9C%8B%E6%9C%80%E8%BF%911000%E6%9D%A1%E8%AE%B0%E5%BD%95%EF%BC%8C%E8%AE%BF%E9%97%AE%E9%87%8F%E6%9C%80%E9%AB%98%E7%9A%84%E9%A1%B5%E9%9D%A2"><span class="toc-number">10.</span> <span class="toc-text">10.查看最近1000条记录，访问量最高的页面</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#11-%E7%BB%9F%E8%AE%A1%E6%AF%8F%E7%A7%92%E7%9A%84%E8%AF%B7%E6%B1%82%E6%95%B0-top100%E7%9A%84%E6%97%B6%E9%97%B4%E7%82%B9-%E7%B2%BE%E7%A1%AE%E5%88%B0%E7%A7%92"><span class="toc-number">11.</span> <span class="toc-text">11.统计每秒的请求数,top100的时间点(精确到秒)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#12-%E7%BB%9F%E8%AE%A1%E6%AF%8F%E5%88%86%E9%92%9F%E7%9A%84%E8%AF%B7%E6%B1%82%E6%95%B0-top100%E7%9A%84%E6%97%B6%E9%97%B4%E7%82%B9-%E7%B2%BE%E7%A1%AE%E5%88%B0%E5%88%86%E9%92%9F"><span class="toc-number">12.</span> <span class="toc-text">12.统计每分钟的请求数,top100的时间点(精确到分钟)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#13-%E7%BB%9F%E8%AE%A1%E6%AF%8F%E5%B0%8F%E6%97%B6%E7%9A%84%E8%AF%B7%E6%B1%82%E6%95%B0-top100%E7%9A%84%E6%97%B6%E9%97%B4%E7%82%B9-%E7%B2%BE%E7%A1%AE%E5%88%B0%E5%B0%8F%E6%97%B6"><span class="toc-number">13.</span> <span class="toc-text">13.统计每小时的请求数,top100的时间点(精确到小时)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#14-%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-%E5%9C%A8nginx-log%E4%B8%AD%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%AD%97%E6%AE%B5%E5%8A%A0%E5%85%A5-request-time"><span class="toc-number">14.</span> <span class="toc-text">14.性能分析,在nginx log中最后一个字段加入$request_time</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E5%87%BA%E4%BC%A0%E8%BE%93%E6%97%B6%E9%97%B4%E8%B6%85%E8%BF%87-3-%E7%A7%92%E7%9A%84%E9%A1%B5%E9%9D%A2%EF%BC%8C%E6%98%BE%E7%A4%BA%E5%89%8D20%E6%9D%A1"><span class="toc-number">14.0.1.</span> <span class="toc-text">列出传输时间超过 3 秒的页面，显示前20条</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E5%87%BAphp%E9%A1%B5%E9%9D%A2%E8%AF%B7%E6%B1%82%E6%97%B6%E9%97%B4%E8%B6%85%E8%BF%873%E7%A7%92%E7%9A%84%E9%A1%B5%E9%9D%A2%EF%BC%8C%E5%B9%B6%E7%BB%9F%E8%AE%A1%E5%85%B6%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0%EF%BC%8C%E6%98%BE%E7%A4%BA%E5%89%8D100%E6%9D%A1"><span class="toc-number">14.0.2.</span> <span class="toc-text">列出php页面请求时间超过3秒的页面，并统计其出现的次数，显示前100条</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#15-%E7%BB%9F%E8%AE%A1%E8%9C%98%E8%9B%9B%E6%8A%93%E5%8F%96%E6%AC%A1%E6%95%B0"><span class="toc-number">15.</span> <span class="toc-text">15.统计蜘蛛抓取次数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#16-%E7%BB%9F%E8%AE%A1%E8%9C%98%E8%9B%9B%E6%8A%93%E5%8F%96404%E7%9A%84%E6%AC%A1%E6%95%B0"><span class="toc-number">16.</span> <span class="toc-text">16.统计蜘蛛抓取404的次数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#17-TCP%E8%BF%9E%E6%8E%A5%E7%BB%9F%E8%AE%A1-%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8DTCP%E8%BF%9E%E6%8E%A5%E6%95%B0"><span class="toc-number">17.</span> <span class="toc-text">17.TCP连接统计,查看当前TCP连接数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#18-%E7%94%A8tcpdump%E5%97%85%E6%8E%A280%E7%AB%AF%E5%8F%A3%E7%9A%84%E8%AE%BF%E9%97%AE%E7%9C%8B%E7%9C%8B%E8%B0%81%E6%9C%80%E9%AB%98"><span class="toc-number">18.</span> <span class="toc-text">18.用tcpdump嗅探80端口的访问看看谁最高</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E8%84%9A%E6%9C%AC%EF%BC%9A"><span class="toc-number">18.0.1.</span> <span class="toc-text">实例脚本：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%89%8D%E4%B8%80%E5%88%86%E9%92%9Fnginx%E8%AE%BF%E9%97%AE%E6%97%A5%E5%BF%97%E6%9D%A1%E6%95%B0"><span class="toc-number">18.0.2.</span> <span class="toc-text">获取前一分钟nginx访问日志条数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%89%8D%E4%B8%80%E5%88%86%E9%92%9Fnginx%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97%E6%9D%A1%E6%95%B0"><span class="toc-number">18.0.3.</span> <span class="toc-text">获取前一分钟nginx错误日志条数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E6%9F%A5%E8%AF%A2%E8%AE%BF%E9%97%AE%E6%9C%80%E9%A2%91%E7%B9%81%E7%9A%84IP-%E5%80%92%E5%BA%8F%E6%8E%92%E5%BA%8F%E5%88%97%E8%A1%A8"><span class="toc-number">18.0.4.</span> <span class="toc-text">1、查询访问最频繁的IP 倒序排序列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E6%A0%B9%E6%8D%AE%E6%97%B6%E9%97%B4%E6%AE%B5%E7%BB%9F%E8%AE%A1%E6%9F%A5%E7%9C%8B%E6%97%A5%E5%BF%97"><span class="toc-number">18.0.5.</span> <span class="toc-text">2、根据时间段统计查看日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E6%AF%8F%E7%A7%92%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%B7%E6%B1%82%E6%95%B0-TOP5"><span class="toc-number">18.0.6.</span> <span class="toc-text">3、每秒客户端请求数 TOP5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E8%AE%BF%E9%97%AE%E6%9C%80%E9%A2%91%E7%B9%81IP-Top5"><span class="toc-number">18.0.7.</span> <span class="toc-text">4、访问最频繁IP Top5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E8%AE%BF%E9%97%AE%E6%9C%80%E9%A2%91%E7%B9%81%E7%9A%84URL-TOP5"><span class="toc-number">18.0.8.</span> <span class="toc-text">5、访问最频繁的URL TOP5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81%E5%93%8D%E5%BA%94%E5%A4%A7%E4%BA%8E10%E7%A7%92%E7%9A%84URL-TOP5"><span class="toc-number">18.0.9.</span> <span class="toc-text">6、响应大于10秒的URL TOP5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%E3%80%81HTTP%E7%8A%B6%E6%80%81%E7%A0%81-%E9%9D%9E200-%E7%BB%9F%E8%AE%A1-Top5"><span class="toc-number">18.0.10.</span> <span class="toc-text">7、HTTP状态码(非200)统计 Top5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8%E3%80%81%E5%88%86%E6%9E%90%E8%AF%B7%E6%B1%82%E6%95%B0%E5%A4%A7%E4%BA%8E50000%E7%9A%84%E6%BA%90IP%E7%9A%84%E8%A1%8C%E4%B8%BA"><span class="toc-number">18.0.11.</span> <span class="toc-text">8、分析请求数大于50000的源IP的行为</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%EF%BC%9A%E5%A6%82%E6%9E%9C%E6%BA%90IP%E6%9D%A5%E8%87%AA%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E5%BA%94%E5%B0%86%E7%AC%AC%E4%B8%80%E6%9D%A1%E5%91%BD%E4%BB%A4%E8%BF%87%E6%BB%A4%E5%9C%B0%E5%9D%80%E6%94%B9%E4%B8%BA-http-x-forwarded-for%E5%9C%B0%E5%9D%80"><span class="toc-number">18.0.11.1.</span> <span class="toc-text">注：如果源IP来自代理服务器，应将第一条命令过滤地址改为$http_x_forwarded_for地址</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BB%B6%E4%BC%B8"><span class="toc-number">19.</span> <span class="toc-text">延伸</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx%E6%97%A5%E5%BF%97%E6%8C%89%E6%97%A5%E5%88%87%E5%89%B2%E5%90%8E%E5%8F%AF%E4%BD%BF%E7%94%A8%E4%B8%8A%E8%BF%B0%E5%91%BD%E4%BB%A4%E5%BE%97%E5%87%BA%E6%AF%8F%E6%97%A5%E7%BD%91%E7%AB%99%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90%E6%A6%82%E5%86%B5%EF%BC%8C%E7%84%B6%E5%90%8E%E5%8F%AF%E4%BB%A5%E5%86%99%E4%B8%80%E4%B8%AAPython%E8%84%9A%E6%9C%AC%E8%AF%BB%E5%8F%96%E5%90%8E%E5%8F%91%E9%80%81%E3%80%82%E4%B9%9F%E5%8F%AF%E4%BB%A5%E5%B0%86%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5MySQL%E7%84%B6%E5%90%8E%E4%BD%BF%E7%94%A8Python%E7%BB%98%E5%88%B6%E6%9B%B2%E7%BA%BF%E3%80%82%E5%BD%93%E7%84%B6%E4%BD%BF%E7%94%A8%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E7%B3%BB%E7%BB%9F%EF%BC%8C%E5%A6%82ELK%EF%BC%8C%E6%95%88%E6%9E%9C%E6%9B%B4%E4%BD%B3%E3%80%82"><span class="toc-number">19.0.1.</span> <span class="toc-text">Nginx日志按日切割后可使用上述命令得出每日网站流量分析概况，然后可以写一个Python脚本读取后发送。也可以将数据导入MySQL然后使用Python绘制曲线。当然使用日志分析系统，如ELK，效果更佳。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E5%90%8E%EF%BC%8C%E5%B0%86%E4%BC%9A%E6%98%BE%E7%A4%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E6%89%80%E6%9C%89%E7%9A%84%E6%AF%8F%E4%B8%AAIP%E5%A4%9A%E5%B0%91%E4%B8%AA%E8%BF%9E%E6%8E%A5%E6%95%B0%E3%80%82"><span class="toc-number">19.0.2.</span> <span class="toc-text">执行后，将会显示服务器上所有的每个IP多少个连接数。</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/80%E7%AB%AF%E5%8F%A3/" title="http网站80端口无法访问解决方案"><img src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/%E9%A3%8E%E6%99%AF/%E6%A1%83%E7%BA%A2%E8%89%B2%E8%8E%B2%E8%8A%B14k%E5%A3%81%E7%BA%B8_%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="http网站80端口无法访问解决方案"/></a><div class="content"><a class="title" href="/posts/80%E7%AB%AF%E5%8F%A3/" title="http网站80端口无法访问解决方案">http网站80端口无法访问解决方案</a><time datetime="2022-08-10T01:45:04.000Z" title="发表于 2022-08-10 09:45:04">2022-08-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/%E6%96%87%E7%AB%A0%E6%A0%BC%E5%BC%8F/" title="文章格式"><img src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/%E9%A3%8E%E6%99%AF/%E5%8A%A0%E6%8B%BF%E5%A4%A7%E7%B1%B3%E8%A5%BF%E7%B4%A2%E5%8A%A0%E8%B0%B7%E5%85%AC%E5%9B%ADKariya_Park_4k%E9%A3%8E%E6%99%AF%E5%A3%81%E7%BA%B8_%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="文章格式"/></a><div class="content"><a class="title" href="/posts/%E6%96%87%E7%AB%A0%E6%A0%BC%E5%BC%8F/" title="文章格式">文章格式</a><time datetime="2022-08-07T11:37:04.000Z" title="发表于 2022-08-07 19:37:04">2022-08-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/ArchLinux/" title="ArchLinux快速上手"><img src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/%E9%A3%8E%E6%99%AF/%E8%87%AA%E7%84%B6_%E7%BB%BF%E8%8D%89_%E6%B0%B4%E6%BB%B4_4K%E6%8A%A4%E7%9C%BC%E5%A3%81%E7%BA%B8_%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ArchLinux快速上手"/></a><div class="content"><a class="title" href="/posts/ArchLinux/" title="ArchLinux快速上手">ArchLinux快速上手</a><time datetime="2022-07-28T11:43:04.000Z" title="发表于 2022-07-28 19:43:04">2022-07-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/%E5%AE%89%E5%8D%93%E6%89%8B%E6%9C%BA%E8%BD%AF%E4%BB%B6/" title="安卓手机软件推荐"><img src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/imgs/4kdongman/Frostby_RuanJia4k%E5%A3%81%E7%BA%B8_%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="安卓手机软件推荐"/></a><div class="content"><a class="title" href="/posts/%E5%AE%89%E5%8D%93%E6%89%8B%E6%9C%BA%E8%BD%AF%E4%BB%B6/" title="安卓手机软件推荐">安卓手机软件推荐</a><time datetime="2022-07-28T08:52:10.000Z" title="发表于 2022-07-28 16:52:10">2022-07-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/Git%E5%90%8C%E6%AD%A5%E6%9C%AC%E5%9C%B0%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/" title="Git同步本地项目到远程仓库"><img src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/imgs/mm/%E7%99%BD%E8%89%B2%E5%A9%9A%E7%BA%B1%E8%A3%99%E5%AD%90%E7%99%BD%E8%89%B2%E4%B8%9D%E8%A2%9C%E7%BE%8E%E8%85%BF%E7%BE%8E%E5%A5%B34k%E5%A3%81%E7%BA%B8_%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git同步本地项目到远程仓库"/></a><div class="content"><a class="title" href="/posts/Git%E5%90%8C%E6%AD%A5%E6%9C%AC%E5%9C%B0%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/" title="Git同步本地项目到远程仓库">Git同步本地项目到远程仓库</a><time datetime="2022-07-27T12:43:49.000Z" title="发表于 2022-07-27 20:43:49">2022-07-27</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('http://www.zhaocai.live:8888/photo/h.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2022 By 赵 才</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://gitee.com/zhaocaiall/personal-blog">Blog</a><br>
+<img src= "/img/loading.gif" data-lazy-src="/img/icp.png">
+<a href="https://beian.miit.gov.cn/" rel="external nofollow noreferrer"  style="color:#f72b07" target="_blank">浙ICP备 - 2022022645号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://fastly.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://fastly.jsdelivr.net/npm/instant.page@5/instantpage.min.js" type="module"></script><script src="https://fastly.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://fastly.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'a-8gen75ycf786bfba',
+      region: '',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'a-8gen75ycf786bfba',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('https://fastly.jsdelivr.net/npm/twikoo@1/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const getComment = () => {
+    const runTwikoo = () => {
+      twikoo.getRecentComments({
+        envId: 'a-8gen75ycf786bfba',
+        region: '',
+        pageSize: 6,
+        includeReply: true
+      }).then(function (res) {
+        const twikooArray = res.map(e => {
+          return {
+            'content': changeContent(e.comment),
+            'avatar': e.avatar,
+            'nick': e.nick,
+            'url': e.url + '#' + e.id,
+            'date': new Date(e.created).toISOString()
+          }
+        })
+
+        saveToLocal.set('twikoo-newest-comments', JSON.stringify(twikooArray), 5/(60*24))
+        generateHtml(twikooArray)
+      }).catch(function (err) {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "无法获取评论，请确认相关配置是否正确"
+      })
+    }
+
+    if (typeof twikoo === 'object') {
+      runTwikoo()
+    } else {
+      getScript('https://fastly.jsdelivr.net/npm/twikoo@1/dist/twikoo.all.min.js').then(runTwikoo)
+    }
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'data-lazy-src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+        
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('twikoo-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><div class="aplayer no-destroy" data-id="7482851759" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><script defer="defer" id="ribbon" src="https://fastly.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/aplayer@1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://fastly.jsdelivr.net/npm/aplayer@1/dist/APlayer.min.js"></script><script src="https://fastly.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://fastly.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script async src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '2');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://unpkg.zhimg.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://unpkg.zhimg.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body></html>

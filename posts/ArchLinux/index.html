@@ -1,0 +1,730 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>ArchLinux快速上手 | 赵才个人博客</title><meta name="keywords" content="ArchLinux"><meta name="author" content="赵 才"><meta name="copyright" content="赵 才"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Termux中proot-distro安装备份还原linuxTermux提供了一个proot-distro软件包，用于管理Termux内部的Linux发行版。据说几乎没有性能损失。 您可以通过执行以下命令安装该实用程序安装proot-distro  123456789pkg install proot-distro# 查询支持哪些发行版本proot-distro listproot-distro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ArchLinux快速上手">
+<meta property="og:url" content="http://www.zhaocai.live:8889/posts/ArchLinux/">
+<meta property="og:site_name" content="赵才个人博客">
+<meta property="og:description" content="Termux中proot-distro安装备份还原linuxTermux提供了一个proot-distro软件包，用于管理Termux内部的Linux发行版。据说几乎没有性能损失。 您可以通过执行以下命令安装该实用程序安装proot-distro  123456789pkg install proot-distro# 查询支持哪些发行版本proot-distro listproot-distro">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.zhaocai.live:8888/%E9%A3%8E%E6%99%AF/%E8%87%AA%E7%84%B6_%E7%BB%BF%E8%8D%89_%E6%B0%B4%E6%BB%B4_4K%E6%8A%A4%E7%9C%BC%E5%A3%81%E7%BA%B8_%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91.jpg">
+<meta property="article:published_time" content="2022-07-28T11:43:04.000Z">
+<meta property="article:modified_time" content="2022-07-28T11:43:04.000Z">
+<meta property="article:author" content="赵 才">
+<meta property="article:tag" content="ArchLinux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.zhaocai.live:8888/%E9%A3%8E%E6%99%AF/%E8%87%AA%E7%84%B6_%E7%BB%BF%E8%8D%89_%E6%B0%B4%E6%BB%B4_4K%E6%8A%A4%E7%9C%BC%E5%A3%81%E7%BA%B8_%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91.jpg"><link rel="shortcut icon" href="http://www.zhaocai.live:8888/photo/tou.png"><link rel="canonical" href="http://www.zhaocai.live:8889/posts/ArchLinux/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":1,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  noticeOutdate: {"limitDay":100,"position":"top","messagePrev":"距离上次更新已经过了","messageNext":"天，文章所描述的內容可能已经发生变化，请留意。"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 赵 才","link":"链接: ","source":"来源: 赵才个人博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://fastly.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://fastly.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ArchLinux快速上手',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-07-28 19:43:04'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><style type="text/css">.card-announcement .social-button{margin:.6rem 0 0 0;text-align:center}.card-announcement .social-button a{display:block;background-color:var(--btn-bg);color:var(--btn-color);text-align:center;line-height:2.4;margin:4px 0}.card-announcement .social-button a:hover{background-color:var(--btn-hover-color)}</style><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="赵才个人博客" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/photo/tou.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E8%AE%B0%E5%BD%95/"><i class="fa-fw fas fa-tint"></i><span> 生活</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div><div class="menus_item"><a class="site-page" href="/video/"><i class="fa-fw fas fa-video"></i><span> 视频</span></a></div><div class="menus_item"><a class="site-page" href="/MV/"><i class="fa-fw fas fa-film"></i><span> 音乐MV</span></a></div><div class="menus_item"><a class="site-page" href="/mv%E8%BD%BB%E9%9F%B3%E4%B9%90/"><i class="fa-fw fas fa-music"></i><span> 轻音乐</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comment-dots"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('http://www.zhaocai.live:8888/%E9%A3%8E%E6%99%AF/%E8%87%AA%E7%84%B6_%E7%BB%BF%E8%8D%89_%E6%B0%B4%E6%BB%B4_4K%E6%8A%A4%E7%9C%BC%E5%A3%81%E7%BA%B8_%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">赵才个人博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-compass"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E8%AE%B0%E5%BD%95/"><i class="fa-fw fas fa-tint"></i><span> 生活</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div><div class="menus_item"><a class="site-page" href="/video/"><i class="fa-fw fas fa-video"></i><span> 视频</span></a></div><div class="menus_item"><a class="site-page" href="/MV/"><i class="fa-fw fas fa-film"></i><span> 音乐MV</span></a></div><div class="menus_item"><a class="site-page" href="/mv%E8%BD%BB%E9%9F%B3%E4%B9%90/"><i class="fa-fw fas fa-music"></i><span> 轻音乐</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comment-dots"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ArchLinux快速上手<a class="post-edit-link" href="https://gitee.com/zhaocaiall/personal-blog/tree/master/source/_posts/ArchLinux快速上手.md" rel="external nofollow noreferrer" title="编辑" target="_blank"><i class="fas fa-pencil-alt"></i></a></h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2022-07-28T11:43:04.000Z" title="发表于 2022-07-28 19:43:04">2022-07-28</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>21分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="ArchLinux快速上手"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Termux中proot-distro安装备份还原linux"><a href="#Termux中proot-distro安装备份还原linux" class="headerlink" title="Termux中proot-distro安装备份还原linux"></a>Termux中proot-distro安装备份还原linux</h1><div class="note red icon-padding simple"><i class="note-icon fas fa-fan"></i><p>Termux提供了一个proot-distro软件包，用于管理Termux内部的Linux发行版。据说几乎没有性能损失。</p>
+<p>您可以通过执行以下命令安装该实用程序<br>安装proot-distro</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pkg install proot-distro</span><br><span class="line"><span class="comment"># 查询支持哪些发行版本</span></span><br><span class="line">proot-distro list</span><br><span class="line">proot-distro install &lt;<span class="built_in">alias</span>&gt;</span><br><span class="line"></span><br><span class="line">我安装的 是archlinux，如下命令：</span><br><span class="line">proot-distro install archlinux</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<div class="note red icon-padding simple"><i class="note-icon fas fa-fan"></i><p>archlinux大概需要下载600M左右的文件，执行时间看你的网速了。如果想下载一个较小的发布版本可以试试其他的，比如：proot-distro install ubuntu-20.04只需要下载25M左右 安装alpine会更小，只需要2.5M左右。</p>
+</div>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>命令执行结果如下：</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">~ $ proot-distro install archlinux</span><br><span class="line">[*] Installing Arch Linux...</span><br><span class="line">[*] Downloading rootfs tarball...</span><br><span class="line"></span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100   646  100   646    0     0    551      0  0:00:01  0:00:01 --:--:--   551</span><br><span class="line">100  549M  100  549M    0     0  1119k      0  0:08:22  0:08:22 --:--:-- 1964k</span><br><span class="line"></span><br><span class="line">[*] Checking integrity, please <span class="built_in">wait</span>...</span><br><span class="line">[*] Extracting rootfs, please <span class="built_in">wait</span>...</span><br><span class="line">[*] Writing <span class="string">&#x27;/data/data/com.termux/files/usr/var/lib/proot-distro/installed-rootfs/archlinux/etc/profile.d/termux-proot.sh&#x27;</span>...</span><br><span class="line">[*] Writing resolv.conf file (NS 1.1.1.1/1.0.0.1)...</span><br><span class="line">[*] Writing hosts file...</span><br><span class="line">[*] Registering Android-specific UIDs and GIDs...</span><br><span class="line">[*] Running distro-specific configuration steps...</span><br><span class="line">gpg: /etc/pacman.d/gnupg/trustdb.gpg: trustdb created</span><br><span class="line">gpg: no ultimately trusted keys found</span><br><span class="line">gpg: starting migration from earlier GnuPG versions</span><br><span class="line">gpg: porting secret keys from <span class="string">&#x27;/etc/pacman.d/gnupg/secring.gpg&#x27;</span> to gpg-agent</span><br><span class="line">gpg: migration succeeded</span><br><span class="line">gpg: Generating pacman keyring master key...</span><br><span class="line">gpg: key CD1AFEBD84DEF5CA marked as ultimately trusted</span><br><span class="line">gpg: directory <span class="string">&#x27;/etc/pacman.d/gnupg/openpgp-revocs.d&#x27;</span> created</span><br><span class="line">gpg: revocation certificate stored as <span class="string">&#x27;/etc/pacman.d/gnupg/openpgp-revocs.d/5BE44E190E37181EE9000E0FCD1AFEBD84DEF5CA.rev&#x27;</span></span><br><span class="line">gpg: Done</span><br><span class="line">==&gt; Updating trust database...</span><br><span class="line">gpg: marginals needed: 3  completes needed: 1  trust model: pgp</span><br><span class="line">gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u</span><br><span class="line">==&gt; Appending keys from archlinuxarm.gpg...</span><br><span class="line">==&gt; Locally signing trusted keys <span class="keyword">in</span> keyring...</span><br><span class="line">  -&gt; Locally signing key 69DD6C8FD314223E14362848BF7EEF7A9C6B5765...</span><br><span class="line">  -&gt; Locally signing key 02922214DE8981D14DC2ACABBC704E86B823CD25...</span><br><span class="line">  -&gt; Locally signing key 9D22B7BB678DC056B1F7723CB55C5315DCD9EE1A...</span><br><span class="line">==&gt; Importing owner trust values...</span><br><span class="line">gpg: setting ownertrust to 4</span><br><span class="line">gpg: inserting ownertrust of 4</span><br><span class="line">gpg: setting ownertrust to 4</span><br><span class="line">==&gt; Updating trust database...</span><br><span class="line">gpg: marginals needed: 3  completes needed: 1  trust model: pgp</span><br><span class="line">gpg: depth: 0  valid:   1  signed:   3  trust: 0-, 0q, 0n, 0m, 0f, 1u</span><br><span class="line">gpg: depth: 1  valid:   3  signed:   1  trust: 0-, 0q, 0n, 3m, 0f, 0u</span><br><span class="line">gpg: depth: 2  valid:   1  signed:   0  trust: 1-, 0q, 0n, 0m, 0f, 0u</span><br><span class="line">Generating locales...</span><br><span class="line">  en_US.UTF-8... <span class="keyword">done</span></span><br><span class="line">Generation complete.</span><br><span class="line">checking dependencies...</span><br><span class="line">:: base optionally requires linux: bare metal support</span><br><span class="line"></span><br><span class="line">Packages (5) diffutils-3.7-3  linux-firmware-20200721.2b823fc-1  mkinitcpio-28-1  mkinitcpio-busybox-1.31.1-1  linux-aarch64-5.8.0-1</span><br><span class="line"></span><br><span class="line">Total Removed Size:  711.25 MiB</span><br><span class="line"></span><br><span class="line">:: Do you want to remove these packages? [Y/n]</span><br><span class="line">:: Running pre-transaction hooks...</span><br><span class="line">(1/1) Removing linux initcpios...</span><br><span class="line">:: Processing package changes...</span><br><span class="line">(1/5) removing linux-aarch64                                                            [<span class="comment">###################################################] 100%</span></span><br><span class="line">(2/5) removing mkinitcpio                                                               [<span class="comment">###################################################] 100%</span></span><br><span class="line">(3/5) removing mkinitcpio-busybox                                                       [<span class="comment">###################################################] 100%</span></span><br><span class="line">(4/5) removing diffutils                                                                [<span class="comment">###################################################] 100%</span></span><br><span class="line">(5/5) removing linux-firmware                                                           [<span class="comment">###################################################] 100%</span></span><br><span class="line">:: Running post-transaction hooks...</span><br><span class="line">(1/3) Reloading system manager configuration...</span><br><span class="line">  Skipped: Current root is not booted.</span><br><span class="line">(2/3) Arming ConditionNeedsUpdate...</span><br><span class="line">(3/3) Updating module dependencies...</span><br><span class="line">[*] Installation finished.</span><br><span class="line"></span><br><span class="line">Now run <span class="string">&#x27;proot-distro login archlinux&#x27;</span> to <span class="built_in">log</span> <span class="keyword">in</span>.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>现在已经安装完成了archlinux，怎么进入archlinux呢？<br>进入archlinux</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">proot-distro login archlinux</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>安装设置中文<br>查看当前语言环境</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$LANG</span></span><br></pre></td></tr></table></figure>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>查看当前系统是否有中文语言包</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">locale -a</span><br></pre></td></tr></table></figure>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>如果没有中文语言包</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/locale.gen</span><br></pre></td></tr></table></figure>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>查看文件中是否有zh_CN.UTF-8在文件中增加一行</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zh_CN.UTF-8 UTF-8</span><br></pre></td></tr></table></figure>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>配置完成以后运行：</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">locale-gen</span><br></pre></td></tr></table></figure>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>生成 locale。<br>向 /etc/locale.conf 输入内容</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;LANG=zh_CN.UTF-8&#x27;</span>  &gt; /etc/locale.conf</span><br></pre></td></tr></table></figure>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>然后，修改/etc/environment（在文件的末尾追加）：</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LANG=<span class="string">&quot;zh_CN.UTF-8&quot;</span></span><br><span class="line">LANGUAGE=<span class="string">&quot;zh_CN:zh:en_US:en&quot;</span></span><br></pre></td></tr></table></figure>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>/etc/environmen这一步加不加实测效果一样，我不清楚为什么这里的环境变量没有生效，反正还是加一下放心一些吧。</p>
+</div>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>手动执行一下export LANG=zh_CN.UTF-8</p>
+</div>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>这里我们输入date查看时间，发现已经有中文了。</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># date</span></span><br><span class="line">2022年 07月 31日 星期四 07:48:25 UTC</span><br></pre></td></tr></table></figure>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>重启进的时候发现还是英文的，那我把就把LANG设置放进环境变量里吧。</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#这里环境变量根据自己的环境来，如果是zsh才放到zsh的配置文件中</span></span><br><span class="line">vim /etc/bash.bashrc</span><br></pre></td></tr></table></figure>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>在底部增加：</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LANG=zh_CN.UTF-8</span><br></pre></td></tr></table></figure>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>备份与还原<br>这里以备份alpine为例，其他系统备份请用别的发行版本的名称。</p>
+<p>备份之前退好先 重启Termux，防止发行版本正在运行，导致备份出错。<br>备份镜像</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#备份alpine</span></span><br><span class="line">proot-distro backup alpine --output ./alpine20210513.tar.gz</span><br><span class="line"><span class="comment">#备份archlinux</span></span><br><span class="line">proot-distro backup archlinux --output ./archlinux20210513.tar.gz</span><br></pre></td></tr></table></figure>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>命令解释：<br>把当作alpine发行版备份到当前目录下的alpine20210513.tar.gz文件</p>
+</div>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>还原镜像<br>⚠️警告还原操作会删除数据！<br>还原后就是备份的数据了。</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proot-distro restore alpine.tar.gz</span><br></pre></td></tr></table></figure>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>分享备份文件<br>有时候做好的开发环境，想要分享给小伙伴们要怎么处理呢？<br>运行下面命令：</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">termux-setup-storage</span><br></pre></td></tr></table></figure>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>手动会弹出如下窗口：</p>
+</div>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>选择 【始终允许】<br>这时~/storage/ 目录就有手机的存储目录了。如下：</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~ $ <span class="built_in">cd</span> ~/storage/</span><br><span class="line">~/storage $ <span class="built_in">ls</span></span><br><span class="line">dcim  downloads  movies  music	pictures  shared</span><br></pre></td></tr></table></figure>
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>卸载发行版本<br>警告警告，会删除数据！</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proot-distro remove alpine</span><br></pre></td></tr></table></figure>
+<h1 id="Pacman包管理器"><a href="#Pacman包管理器" class="headerlink" title="Pacman包管理器"></a>Pacman包管理器</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pacman -S 	<span class="comment"># 安装软件包</span></span><br><span class="line">pacman -Syy	<span class="comment"># 更新软件仓库</span></span><br><span class="line">pacman -Syu	<span class="comment"># 更新软件包</span></span><br><span class="line">pacman -R	<span class="comment"># 删除软件包</span></span><br><span class="line">pacman -Ss	<span class="comment"># 搜索软件包</span></span><br><span class="line">pacman -U	<span class="comment"># 安装本地包</span></span><br><span class="line"><span class="comment"># yay也有同样的功能</span></span><br></pre></td></tr></table></figure>
+<h1 id="Vim编辑器"><a href="#Vim编辑器" class="headerlink" title="Vim编辑器"></a>Vim编辑器</h1><h2 id="1、命令模式"><a href="#1、命令模式" class="headerlink" title="1、命令模式"></a>1、命令模式</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">操作类型</th>
+<th style="text-align:left">操作键</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">方向移动</td>
+<td style="text-align:left">H J K L或上下左右键</td>
+<td style="text-align:left">上下左右</td>
+</tr>
+<tr>
+<td style="text-align:left">翻页</td>
+<td style="text-align:left">Page Down或Ctrl+F</td>
+<td style="text-align:left">下翻页</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Page up 或Ctrl+B</td>
+<td style="text-align:left">上翻页</td>
+</tr>
+<tr>
+<td style="text-align:left">行内快速跳转</td>
+<td style="text-align:left">HOME键或 ^ 、数字0</td>
+<td style="text-align:left">跳至行首</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">END键或$</td>
+<td style="text-align:left">跳至行尾</td>
+</tr>
+<tr>
+<td style="text-align:left">行间快速跳转</td>
+<td style="text-align:left">1G或gg</td>
+<td style="text-align:left">跳转文件的首行</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">G</td>
+<td style="text-align:left">跳转文件的尾行</td>
+</tr>
+<tr>
+<td style="text-align:left">删除</td>
+<td style="text-align:left">x或Del</td>
+<td style="text-align:left">删除光标处的单个字符</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">dw</td>
+<td style="text-align:left">删除至一个单词的末尾</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">dd</td>
+<td style="text-align:left">删除当前光标所在行</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">d^</td>
+<td style="text-align:left">删除当前光标之前到行首的所有字符（不含光标）</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">d$</td>
+<td style="text-align:left">从当前光标删除到行尾（包含光标）</td>
+</tr>
+<tr>
+<td style="text-align:left">复制</td>
+<td style="text-align:left">yy</td>
+<td style="text-align:left">复制当前行整行的内容到剪贴板</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">#yy</td>
+<td style="text-align:left">复制从光标所在行开始的#行内容</td>
+</tr>
+<tr>
+<td style="text-align:left">粘贴</td>
+<td style="text-align:left">p</td>
+<td style="text-align:left">将最后删除的内容置入光标之后，粘贴到光标位置处之前</td>
+</tr>
+<tr>
+<td style="text-align:left">替换</td>
+<td style="text-align:left">r+字符</td>
+<td style="text-align:left">输入r+字符，替换所在位置字符</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">ce+字符</td>
+<td style="text-align:left">从光标处更改直到单词末尾</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">c$+字符</td>
+<td style="text-align:left">从光标处更改直到行尾</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">R+字符</td>
+<td style="text-align:left">连续替换多个字符</td>
+</tr>
+<tr>
+<td style="text-align:left">查找</td>
+<td style="text-align:left">/word</td>
+<td style="text-align:left">从上而下在文件中查找字符串“word”</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">?word</td>
+<td style="text-align:left">（逆向）从下而上在文件中查找字符串“word</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">n</td>
+<td style="text-align:left">向下查找匹配字符串</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">N</td>
+<td style="text-align:left">向上查找匹配字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">撤销</td>
+<td style="text-align:left">u</td>
+<td style="text-align:left">撤销最后执行的命令,多次输入，多次撤销</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">U</td>
+<td style="text-align:left">撤销对整行的命令</td>
+</tr>
+<tr>
+<td style="text-align:left">退出</td>
+<td style="text-align:left">ZZ</td>
+<td style="text-align:left">保存当前的文件内容并退出vi编辑器</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">:wq</td>
+<td style="text-align:left">保持并退出</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">:q!</td>
+<td style="text-align:left">强制退出</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="2、插入模式"><a href="#2、插入模式" class="headerlink" title="2、插入模式"></a>2、插入模式</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">i</td>
+<td style="text-align:left">光标前插入文本</td>
+</tr>
+<tr>
+<td style="text-align:left">a</td>
+<td style="text-align:left">光标后插入文本</td>
+</tr>
+<tr>
+<td style="text-align:left">A</td>
+<td style="text-align:left">行末尾插入文本</td>
+</tr>
+<tr>
+<td style="text-align:left">o</td>
+<td style="text-align:left">光标下行插入文本</td>
+</tr>
+<tr>
+<td style="text-align:left">O</td>
+<td style="text-align:left">光标上行插入文本</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="3、末行模式"><a href="#3、末行模式" class="headerlink" title="3、末行模式"></a>3、末行模式</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">功能</th>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">保存文件</td>
+<td style="text-align:left">：w</td>
+<td style="text-align:left">保存修改的内容</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">: w /root/newfile</td>
+<td style="text-align:left">另存为其他文件</td>
+</tr>
+<tr>
+<td style="text-align:left">退出vi</td>
+<td style="text-align:left">: q</td>
+<td style="text-align:left">未修改退出</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">: q!</td>
+<td style="text-align:left">放弃修改并退出</td>
+</tr>
+<tr>
+<td style="text-align:left">保存文件退出vi</td>
+<td style="text-align:left">:wq或x</td>
+<td style="text-align:left">保存修改的内容并退出</td>
+</tr>
+<tr>
+<td style="text-align:left">行号显示</td>
+<td style="text-align:left">：set nu</td>
+<td style="text-align:left">在编辑器中显示行号</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">：set nonu</td>
+<td style="text-align:left">取消编辑器中显示行号</td>
+</tr>
+<tr>
+<td style="text-align:left">替换</td>
+<td style="text-align:left">：s/old/new</td>
+<td style="text-align:left">只替换该行首个</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">: s/old/new/g</td>
+<td style="text-align:left">替换该行全部</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="4、插件安装"><a href="#4、插件安装" class="headerlink" title="4、插件安装"></a>4、插件安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S nvim python-pynvim</span><br><span class="line">sh -c <span class="string">&#x27;curl -fLo &quot;$&#123;XDG_DATA_HOME:-$HOME/.local/share&#125;&quot;/nvim/site/autoload/plug.vim --create-dirs \</span></span><br><span class="line"><span class="string">       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim&#x27;</span></span><br><span class="line"><span class="comment"># 出现raw.githubusercontent.com 无法访问 百度站长工具dns解析 把解析出来的ip加入到 /etc/hosts 里面 例如：185.199.110.133 raw.githubusercontent.com</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> -p ~/.config/nvim</span><br><span class="line">vim ~/.config/nvim/init.vim</span><br><span class="line"><span class="comment"># 输入以下内容保存并退出</span></span><br><span class="line"><span class="string">&quot; Key Remapping</span></span><br><span class="line"><span class="string">imap jk &lt;Esc&gt;</span></span><br><span class="line"><span class="string">nnoremap tn  :tabnew&lt;CR&gt;</span></span><br><span class="line"><span class="string">nnoremap tj  :tabnext&lt;CR&gt;</span></span><br><span class="line"><span class="string">nnoremap tk  :tabprev&lt;CR&gt;</span></span><br><span class="line"><span class="string">nnoremap tc  :tabclose&lt;CR&gt;</span></span><br><span class="line"><span class="string">let mapleader =&#x27;,&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span>Vundle</span><br><span class="line"><span class="built_in">set</span> nocompatible              <span class="string">&quot; be iMproved, required</span></span><br><span class="line"><span class="string">filetype off                  &quot;</span> required</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; set the runtime path to include Vundle and initialize</span></span><br><span class="line"><span class="string">call plug#begin(&#x27;~/.vim/plugged&#x27;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> Color Schemes</span><br><span class="line"><span class="string">&quot;Plug &#x27;flazz/vim-colorschemes&#x27;</span></span><br><span class="line"><span class="string">Plug &#x27;joshdick/onedark.vim&#x27;</span></span><br><span class="line"><span class="string">&quot;</span>Use 24-bit (true-color) mode <span class="keyword">in</span> Vim/Neovim when outside tmux.</span><br><span class="line"><span class="string">&quot;If you&#x27;re using tmux version 2.2 or later, you can remove the outermost <span class="variable">$TMUX</span> check and use tmux&#x27;s 24-bit color support</span></span><br><span class="line"><span class="string">&quot;</span>(see &lt; http://sunaku.github.io/tmux-24bit-color.html<span class="comment">#usage &gt; for more information.)</span></span><br><span class="line"><span class="keyword">if</span> (empty(<span class="variable">$TMUX</span>))</span><br><span class="line">  <span class="keyword">if</span> (has(<span class="string">&quot;nvim&quot;</span>))</span><br><span class="line">    <span class="string">&quot;For Neovim 0.1.3 and 0.1.4 &lt; https://github.com/neovim/neovim/pull/2198 &gt;</span></span><br><span class="line"><span class="string">    let <span class="variable">$NVIM_TUI_ENABLE_TRUE_COLOR</span>=1</span></span><br><span class="line"><span class="string">  endif</span></span><br><span class="line"><span class="string">  &quot;</span>For Neovim &gt; 0.1.5 and Vim &gt; patch 7.4.1799 &lt; https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 &gt;</span><br><span class="line">  <span class="string">&quot;Based on Vim patch 7.4.1770 (`guicolors` option) &lt; https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd &gt;</span></span><br><span class="line"><span class="string">  &quot;</span> &lt; https://github.com/neovim/neovim/wiki/Following-HEAD<span class="comment">#20160511 &gt;</span></span><br><span class="line">  <span class="keyword">if</span> (has(<span class="string">&quot;termguicolors&quot;</span>))</span><br><span class="line">    <span class="built_in">set</span> termguicolors</span><br><span class="line">  endif</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; Icons</span></span><br><span class="line"><span class="string">Plug &#x27;ryanoasis/vim-devicons&#x27;, &#123;&#x27;commit&#x27;: &#x27;58e57b6&#x27;&#125;</span></span><br><span class="line"><span class="string">&quot;</span> Files + devicons</span><br><span class="line"><span class="keyword">function</span>! Fzf_dev()</span><br><span class="line">  <span class="built_in">let</span> l:fzf_files_options = <span class="string">&#x27; -m --bind ctrl-d:preview-page-down,ctrl-u:preview-page-up --preview &quot;bat --color always --style numbers &#123;2..&#125;&quot;&#x27;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span>! s:files()</span><br><span class="line">    <span class="built_in">let</span> l:files = <span class="built_in">split</span>(system(<span class="variable">$FZF_DEFAULT_COMMAND</span>), <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">    <span class="built_in">return</span> s:prepend_icon(l:files)</span><br><span class="line">  endfunction</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span>! s:prepend_icon(candidates)</span><br><span class="line">    <span class="built_in">let</span> result = []</span><br><span class="line">    <span class="keyword">for</span> candidate <span class="keyword">in</span> a:candidates</span><br><span class="line">      <span class="built_in">let</span> filename = fnamemodify(candidate, <span class="string">&#x27;:p:t&#x27;</span>)</span><br><span class="line">      <span class="built_in">let</span> icon = WebDevIconsGetFileTypeSymbol(filename, isdirectory(filename))</span><br><span class="line">      call add(result, <span class="built_in">printf</span>(<span class="string">&quot;%s %s&quot;</span>, icon, candidate))</span><br><span class="line">    endfor</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> result</span><br><span class="line">  endfunction</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span>! s:edit_file(items)</span><br><span class="line">    <span class="built_in">let</span> items = a:items</span><br><span class="line">    <span class="built_in">let</span> i = 1</span><br><span class="line">    <span class="built_in">let</span> <span class="built_in">ln</span> = len(items)</span><br><span class="line">    <span class="keyword">while</span> i &lt; <span class="built_in">ln</span></span><br><span class="line">      <span class="built_in">let</span> item = items[i]</span><br><span class="line">      <span class="built_in">let</span> parts = <span class="built_in">split</span>(item, <span class="string">&#x27; &#x27;</span>)</span><br><span class="line">      <span class="built_in">let</span> file_path = get(parts, 1, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">      <span class="built_in">let</span> items[i] = file_path</span><br><span class="line">      <span class="built_in">let</span> i += 1</span><br><span class="line">    endwhile</span><br><span class="line">    call s:Sink(items)</span><br><span class="line">  endfunction</span><br><span class="line"></span><br><span class="line">  <span class="built_in">let</span> opts = fzf<span class="comment">#wrap(&#123;&#125;)</span></span><br><span class="line">  <span class="built_in">let</span> opts.source = &lt;sid&gt;files()</span><br><span class="line">  <span class="built_in">let</span> s:Sink = opts[<span class="string">&#x27;sink*&#x27;</span>]</span><br><span class="line">  <span class="built_in">let</span> opts[<span class="string">&#x27;sink*&#x27;</span>] = <span class="keyword">function</span>(<span class="string">&#x27;s:edit_file&#x27;</span>)</span><br><span class="line">  <span class="built_in">let</span> opts.options .= l:fzf_files_options</span><br><span class="line">  call fzf<span class="comment">#run(opts)</span></span><br><span class="line"></span><br><span class="line">endfunction</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; NERDTree</span></span><br><span class="line"><span class="string">Plug &#x27;scrooloose/nerdtree&#x27;</span></span><br><span class="line"><span class="string">map &lt;silent&gt; &lt;C-e&gt; :NERDTreeToggle&lt;CR&gt;</span></span><br><span class="line"><span class="string">map &lt;silent&gt; &lt;C-w&gt; :NERDTreeFind&lt;CR&gt;</span></span><br><span class="line"><span class="string">nmap &lt;leader&gt;nt :NERDTreeFind&lt;CR&gt;</span></span><br><span class="line"><span class="string">let NERDTreeShowBookmarks=1</span></span><br><span class="line"><span class="string">let NERDTreeIgnore=[&#x27;\.py[cd]$&#x27;, &#x27;\~$&#x27;, &#x27;\.swo$&#x27;, &#x27;\.swp$&#x27;, &#x27;^\.git$&#x27;, &#x27;^\.hg$&#x27;, &#x27;^\.svn$&#x27;, &#x27;\.bzr$&#x27;]</span></span><br><span class="line"><span class="string">let NERDTreeChDirMode=0</span></span><br><span class="line"><span class="string">let NERDTreeQuitOnOpen=1</span></span><br><span class="line"><span class="string">let NERDTreeMouseMode=2</span></span><br><span class="line"><span class="string">let NERDTreeShowHidden=1</span></span><br><span class="line"><span class="string">let NERDTreeKeepTreeInNewTab=1</span></span><br><span class="line"><span class="string">let g:nerdtree_tabs_open_on_gui_startup=0</span></span><br><span class="line"><span class="string">&quot;</span> NERDTrees File highlighting</span><br><span class="line"><span class="keyword">function</span>! NERDTreeHighlightFile(extension, <span class="built_in">fg</span>, <span class="built_in">bg</span>, guifg, guibg)</span><br><span class="line"><span class="built_in">exec</span> <span class="string">&#x27;autocmd FileType nerdtree highlight &#x27;</span> . a:extension .<span class="string">&#x27; ctermbg=&#x27;</span>. a:<span class="built_in">bg</span> .<span class="string">&#x27; ctermfg=&#x27;</span>. a:<span class="built_in">fg</span> .<span class="string">&#x27; guibg=&#x27;</span>. a:guibg .<span class="string">&#x27; guifg=&#x27;</span>. a:guifg</span><br><span class="line"><span class="built_in">exec</span> <span class="string">&#x27;autocmd FileType nerdtree syn match &#x27;</span> . a:extension .<span class="string">&#x27; #^\s\+.*&#x27;</span>. a:extension .<span class="string">&#x27;$#&#x27;</span></span><br><span class="line">endfunction</span><br><span class="line">au VimEnter * call NERDTreeHighlightFile(<span class="string">&#x27;jade&#x27;</span>, <span class="string">&#x27;green&#x27;</span>, <span class="string">&#x27;none&#x27;</span>, <span class="string">&#x27;green&#x27;</span>, <span class="string">&#x27;#151515&#x27;</span>)</span><br><span class="line">au VimEnter * call NERDTreeHighlightFile(<span class="string">&#x27;ini&#x27;</span>, <span class="string">&#x27;yellow&#x27;</span>, <span class="string">&#x27;none&#x27;</span>, <span class="string">&#x27;yellow&#x27;</span>, <span class="string">&#x27;#151515&#x27;</span>)</span><br><span class="line">au VimEnter * call NERDTreeHighlightFile(<span class="string">&#x27;md&#x27;</span>, <span class="string">&#x27;blue&#x27;</span>, <span class="string">&#x27;none&#x27;</span>, <span class="string">&#x27;#3366FF&#x27;</span>, <span class="string">&#x27;#151515&#x27;</span>)</span><br><span class="line">au VimEnter * call NERDTreeHighlightFile(<span class="string">&#x27;yml&#x27;</span>, <span class="string">&#x27;yellow&#x27;</span>, <span class="string">&#x27;none&#x27;</span>, <span class="string">&#x27;yellow&#x27;</span>, <span class="string">&#x27;#151515&#x27;</span>)</span><br><span class="line">au VimEnter * call NERDTreeHighlightFile(<span class="string">&#x27;config&#x27;</span>, <span class="string">&#x27;yellow&#x27;</span>, <span class="string">&#x27;none&#x27;</span>, <span class="string">&#x27;yellow&#x27;</span>, <span class="string">&#x27;#151515&#x27;</span>)</span><br><span class="line">au VimEnter * call NERDTreeHighlightFile(<span class="string">&#x27;conf&#x27;</span>, <span class="string">&#x27;yellow&#x27;</span>, <span class="string">&#x27;none&#x27;</span>, <span class="string">&#x27;yellow&#x27;</span>, <span class="string">&#x27;#151515&#x27;</span>)</span><br><span class="line">au VimEnter * call NERDTreeHighlightFile(<span class="string">&#x27;json&#x27;</span>, <span class="string">&#x27;yellow&#x27;</span>, <span class="string">&#x27;none&#x27;</span>, <span class="string">&#x27;yellow&#x27;</span>, <span class="string">&#x27;#151515&#x27;</span>)</span><br><span class="line">au VimEnter * call NERDTreeHighlightFile(<span class="string">&#x27;html&#x27;</span>, <span class="string">&#x27;yellow&#x27;</span>, <span class="string">&#x27;none&#x27;</span>, <span class="string">&#x27;yellow&#x27;</span>, <span class="string">&#x27;#151515&#x27;</span>)</span><br><span class="line">au VimEnter * call NERDTreeHighlightFile(<span class="string">&#x27;styl&#x27;</span>, <span class="string">&#x27;cyan&#x27;</span>, <span class="string">&#x27;none&#x27;</span>, <span class="string">&#x27;cyan&#x27;</span>, <span class="string">&#x27;#151515&#x27;</span>)</span><br><span class="line">au VimEnter * call NERDTreeHighlightFile(<span class="string">&#x27;css&#x27;</span>, <span class="string">&#x27;cyan&#x27;</span>, <span class="string">&#x27;none&#x27;</span>, <span class="string">&#x27;cyan&#x27;</span>, <span class="string">&#x27;#151515&#x27;</span>)</span><br><span class="line">au VimEnter * call NERDTreeHighlightFile(<span class="string">&#x27;coffee&#x27;</span>, <span class="string">&#x27;Red&#x27;</span>, <span class="string">&#x27;none&#x27;</span>, <span class="string">&#x27;red&#x27;</span>, <span class="string">&#x27;#151515&#x27;</span>)</span><br><span class="line">au VimEnter * call NERDTreeHighlightFile(<span class="string">&#x27;js&#x27;</span>, <span class="string">&#x27;Red&#x27;</span>, <span class="string">&#x27;none&#x27;</span>, <span class="string">&#x27;#ffa500&#x27;</span>, <span class="string">&#x27;#151515&#x27;</span>)</span><br><span class="line">au VimEnter * call NERDTreeHighlightFile(<span class="string">&#x27;rb&#x27;</span>, <span class="string">&#x27;Red&#x27;</span>, <span class="string">&#x27;none&#x27;</span>, <span class="string">&#x27;#ffa500&#x27;</span>, <span class="string">&#x27;#151515&#x27;</span>)</span><br><span class="line">au VimEnter * call NERDTreeHighlightFile(<span class="string">&#x27;php&#x27;</span>, <span class="string">&#x27;Magenta&#x27;</span>, <span class="string">&#x27;none&#x27;</span>, <span class="string">&#x27;#ff00ff&#x27;</span>, <span class="string">&#x27;#151515&#x27;</span>)</span><br><span class="line">autocmd VimEnter * call NERDTreeHighlightFile(<span class="string">&#x27;jade&#x27;</span>, <span class="string">&#x27;green&#x27;</span>, <span class="string">&#x27;none&#x27;</span>, <span class="string">&#x27;green&#x27;</span>, <span class="string">&#x27;#151515&#x27;</span>)</span><br><span class="line">highlight! <span class="built_in">link</span> NERDTreeFlags NERDTreeDir</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; &quot;</span> AutoCompleteRelated</span><br><span class="line">Plug <span class="string">&#x27;neoclide/coc.nvim&#x27;</span>, &#123;<span class="string">&#x27;branch&#x27;</span>: <span class="string">&#x27;release&#x27;</span>&#125;</span><br><span class="line"><span class="built_in">let</span> g:coc_global_extensions = [</span><br><span class="line">  \ <span class="string">&#x27;coc-snippets&#x27;</span>,</span><br><span class="line">  \ <span class="string">&#x27;coc-pairs&#x27;</span>,</span><br><span class="line">  \ <span class="string">&#x27;coc-tsserver&#x27;</span>,</span><br><span class="line">  \ <span class="string">&#x27;coc-eslint&#x27;</span>,</span><br><span class="line">  \ <span class="string">&#x27;coc-prettier&#x27;</span>,</span><br><span class="line">  \ <span class="string">&#x27;coc-json&#x27;</span>,</span><br><span class="line">  \ ]</span><br><span class="line"><span class="string">&quot; if hidden is not set, TextEdit might fail.</span></span><br><span class="line"><span class="string">set hidden</span></span><br><span class="line"><span class="string">&quot;</span> Some servers have issues with backup files, see <span class="comment">#649</span></span><br><span class="line"><span class="built_in">set</span> nobackup</span><br><span class="line"><span class="built_in">set</span> nowritebackup</span><br><span class="line"><span class="string">&quot; Better display for messages</span></span><br><span class="line"><span class="string">set cmdheight=2</span></span><br><span class="line"><span class="string">&quot;</span> You will have bad experience <span class="keyword">for</span> diagnostic messages when it<span class="string">&#x27;s default 4000.</span></span><br><span class="line"><span class="string">set updatetime=300</span></span><br><span class="line"><span class="string">&quot; don&#x27;</span>t give |ins-completion-menu| messages.</span><br><span class="line"><span class="built_in">set</span> shortmess+=c</span><br><span class="line"><span class="string">&quot; always show signcolumns</span></span><br><span class="line"><span class="string">set signcolumn=yes</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> coc config</span><br><span class="line"><span class="built_in">let</span> g:coc_global_extensions = [</span><br><span class="line">  \ <span class="string">&#x27;coc-tsserver&#x27;</span>,</span><br><span class="line">  \ ]</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; Use tab for trigger completion with characters ahead and navigate.</span></span><br><span class="line"><span class="string">&quot;</span> Use <span class="built_in">command</span> <span class="string">&#x27;:verbose imap &lt;tab&gt;&#x27;</span> to make sure tab is not mapped by other plugin.</span><br><span class="line">inoremap &lt;silent&gt;&lt;<span class="built_in">expr</span>&gt; &lt;TAB&gt;</span><br><span class="line">      \ pumvisible() ? <span class="string">&quot;\&lt;C-n&gt;&quot;</span> :</span><br><span class="line">      \ &lt;SID&gt;check_back_space() ? <span class="string">&quot;\&lt;TAB&gt;&quot;</span> :</span><br><span class="line">      \ coc<span class="comment">#refresh()</span></span><br><span class="line">inoremap &lt;<span class="built_in">expr</span>&gt;&lt;S-TAB&gt; pumvisible() ? <span class="string">&quot;\&lt;C-p&gt;&quot;</span> : <span class="string">&quot;\&lt;C-h&gt;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span>! s:check_back_space() abort</span><br><span class="line">  <span class="built_in">let</span> col = col(<span class="string">&#x27;.&#x27;</span>) - 1</span><br><span class="line">  <span class="built_in">return</span> !col || getline(<span class="string">&#x27;.&#x27;</span>)[col - 1]  =~<span class="comment"># &#x27;\s&#x27;</span></span><br><span class="line">endfunction</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; Use &lt;c-space&gt; to trigger completion.</span></span><br><span class="line"><span class="string">inoremap &lt;silent&gt;&lt;expr&gt; &lt;c-space&gt; coc#refresh()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> Use &lt;cr&gt; to confirm completion, `&lt;C-g&gt;u` means <span class="built_in">break</span> undo chain at current position.</span><br><span class="line"><span class="string">&quot; Coc only does snippet and additional edit on confirm.</span></span><br><span class="line"><span class="string">inoremap &lt;expr&gt; &lt;cr&gt; pumvisible() ? &quot;</span>\&lt;C-y&gt;<span class="string">&quot; : &quot;</span>\&lt;C-g&gt;u\&lt;CR&gt;<span class="string">&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> Use `[c` and `]c` to navigate diagnostics</span><br><span class="line">nmap &lt;silent&gt; [c &lt;Plug&gt;(coc-diagnostic-prev)</span><br><span class="line">nmap &lt;silent&gt; ]c &lt;Plug&gt;(coc-diagnostic-next)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; Remap keys for gotos</span></span><br><span class="line"><span class="string">nmap &lt;silent&gt; gd &lt;Plug&gt;(coc-definition)</span></span><br><span class="line"><span class="string">nmap &lt;silent&gt; gy &lt;Plug&gt;(coc-type-definition)</span></span><br><span class="line"><span class="string">nmap &lt;silent&gt; gi &lt;Plug&gt;(coc-implementation)</span></span><br><span class="line"><span class="string">nmap &lt;silent&gt; gr &lt;Plug&gt;(coc-references)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> Use K to show documentation <span class="keyword">in</span> preview window</span><br><span class="line">nnoremap &lt;silent&gt; K :call &lt;SID&gt;show_documentation()&lt;CR&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span>! s:show_documentation()</span><br><span class="line">  <span class="keyword">if</span> (index([<span class="string">&#x27;vim&#x27;</span>,<span class="string">&#x27;help&#x27;</span>], &amp;filetype) &gt;= 0)</span><br><span class="line">    execute <span class="string">&#x27;h &#x27;</span>.<span class="built_in">expand</span>(<span class="string">&#x27;&lt;cword&gt;&#x27;</span>)</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    call CocAction(<span class="string">&#x27;doHover&#x27;</span>)</span><br><span class="line">  endif</span><br><span class="line">endfunction</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; Track the engine.</span></span><br><span class="line"><span class="string">Plug &#x27;SirVer/ultisnips&#x27;</span></span><br><span class="line"><span class="string">&quot;</span> Snippets are separated from the engine. Add this <span class="keyword">if</span> you want them:</span><br><span class="line">Plug <span class="string">&#x27;honza/vim-snippets&#x27;</span></span><br><span class="line"><span class="string">&quot; ES2015 code snippets (Optional)</span></span><br><span class="line"><span class="string">Plug &#x27;epilande/vim-es2015-snippets&#x27;</span></span><br><span class="line"><span class="string">&quot;</span> React code snippets</span><br><span class="line">Plug <span class="string">&#x27;epilande/vim-react-snippets&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> g:UltiSnipsExpandTrigger=<span class="string">&quot;&lt;c-l&gt;&quot;</span></span><br><span class="line"><span class="built_in">let</span> g:UltiSnipsJumpForwardTrigger=<span class="string">&quot;&lt;c-b&gt;&quot;</span></span><br><span class="line"><span class="built_in">let</span> g:UltiSnipsJumpBackwardTrigger=<span class="string">&quot;&lt;c-z&gt;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot; FZF</span></span><br><span class="line"><span class="string">Plug &#x27;junegunn/fzf&#x27;, &#123; &#x27;dir&#x27;: &#x27;~/.fzf&#x27;, &#x27;do&#x27;: &#x27;./install --all&#x27; &#125;</span></span><br><span class="line"><span class="string">Plug &#x27;junegunn/fzf.vim&#x27;</span></span><br><span class="line"><span class="string">let g:fzf_action = &#123;</span></span><br><span class="line"><span class="string">      \ &#x27;ctrl-t&#x27;: &#x27;tab split&#x27;,</span></span><br><span class="line"><span class="string">      \ &#x27;ctrl-s&#x27;: &#x27;split&#x27;,</span></span><br><span class="line"><span class="string">      \ &#x27;ctrl-v&#x27;: &#x27;vsplit&#x27;</span></span><br><span class="line"><span class="string">      \ &#125;</span></span><br><span class="line"><span class="string">nnoremap &lt;c-p&gt; :call Fzf_dev()&lt;cr&gt;</span></span><br><span class="line"><span class="string">nnoremap &lt;c-i&gt; :Ag&lt;cr&gt;</span></span><br><span class="line"><span class="string">let <span class="variable">$FZF_DEFAULT_COMMAND</span> = &#x27;ag -g &quot;</span><span class="string">&quot;&#x27;</span></span><br><span class="line"><span class="string">&quot;</span> Augmenting Ag <span class="built_in">command</span> using fzf<span class="comment">#vim#with_preview function</span></span><br><span class="line"><span class="string">&quot;   * fzf#vim#with_preview([[options], preview window, [toggle keys...]])</span></span><br><span class="line"><span class="string">&quot;</span>     * For syntax-highlighting, Ruby and any of the following tools are required:</span><br><span class="line"><span class="string">&quot;       - Highlight: http://www.andre-simon.de/doku/highlight/en/highlight.php</span></span><br><span class="line"><span class="string">&quot;</span>       - CodeRay: http://coderay.rubychan.de/</span><br><span class="line"><span class="string">&quot;       - Rouge: https://github.com/jneen/rouge</span></span><br><span class="line"><span class="string">&quot;</span></span><br><span class="line"><span class="string">&quot;   :Ag  - Start fzf with hidden preview window that can be enabled with &quot;</span>?<span class="string">&quot; key</span></span><br><span class="line"><span class="string">&quot;</span>   :Ag! - Start fzf <span class="keyword">in</span> fullscreen and display the preview window above</span><br><span class="line"><span class="built_in">command</span>! -bang -nargs=* Ag</span><br><span class="line">      \ call fzf<span class="comment">#vim#ag(&lt;q-args&gt;,</span></span><br><span class="line">      \                 &lt;bang&gt;0 ? fzf<span class="comment">#vim#with_preview(&#123;&#x27;options&#x27;: &#x27;--delimiter : --nth 4..&#x27;&#125;, &#x27;up:60%&#x27;)</span></span><br><span class="line">      \                         : fzf<span class="comment">#vim#with_preview(&#123;&#x27;options&#x27;: &#x27;--delimiter : --nth 4..&#x27;&#125;, &#x27;right:50%:hidden&#x27;, &#x27;?&#x27;),</span></span><br><span class="line">      \                 &lt;bang&gt;0)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; EasyMotion</span></span><br><span class="line"><span class="string">Plug &#x27;easymotion/vim-easymotion&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> Fugitive</span><br><span class="line">Plug <span class="string">&#x27;tpope/vim-fugitive&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot; Airline</span></span><br><span class="line"><span class="string">Plug &#x27;vim-airline/vim-airline&#x27;</span></span><br><span class="line"><span class="string">Plug &#x27;vim-airline/vim-airline-themes&#x27;</span></span><br><span class="line"><span class="string">set laststatus=2</span></span><br><span class="line"><span class="string">let g:airline_left_sep = &#x27;&#x27;</span></span><br><span class="line"><span class="string">let g:airline_left_alt_sep = &#x27;&#x27;</span></span><br><span class="line"><span class="string">let g:airline_right_sep = &#x27;&#x27;</span></span><br><span class="line"><span class="string">let g:airline_right_alt_sep = &#x27;&#x27;</span></span><br><span class="line"><span class="string">let g:airline_symbols = &#123;&#125;</span></span><br><span class="line"><span class="string">let g:airline_symbols.branch = &#x27;&#x27;</span></span><br><span class="line"><span class="string">let g:airline_symbols.readonly = &#x27;&#x27;</span></span><br><span class="line"><span class="string">let g:airline_symbols.linenr = &#x27;☰&#x27;</span></span><br><span class="line"><span class="string">let g:airline_symbols.maxlinenr = &#x27;&#x27;</span></span><br><span class="line"><span class="string">let g:airline_symbols.dirty=&#x27;⚡&#x27;</span></span><br><span class="line"><span class="string">let g:airline_theme = &#x27;onedark&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> DelemitMate</span><br><span class="line">Plug <span class="string">&#x27;Raimondi/delimitMate&#x27;</span></span><br><span class="line"><span class="built_in">let</span> delimitMate_expand_cr = 1</span><br><span class="line"><span class="built_in">let</span> delimitMate_expand_space = 1</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; GitGutter</span></span><br><span class="line"><span class="string">Plug &#x27;airblade/vim-gitgutter&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> Code Formatter</span><br><span class="line">Plug <span class="string">&#x27;Chiel92/vim-autoformat&#x27;</span></span><br><span class="line">nnoremap &lt;Leader&gt;&lt;Leader&gt;a :Autoformat&lt;cr&gt;</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; Plugins for Javascript</span></span><br><span class="line"><span class="string">Plug &#x27;jelera/vim-javascript-syntax&#x27;</span></span><br><span class="line"><span class="string">Plug &#x27;pangloss/vim-javascript&#x27;</span></span><br><span class="line"><span class="string">Plug &#x27;isRuslan/vim-es6&#x27;</span></span><br><span class="line"><span class="string">Plug &#x27;tpope/vim-surround&#x27;</span></span><br><span class="line"><span class="string">Plug &#x27;tpope/vim-repeat&#x27;</span></span><br><span class="line"><span class="string">Plug &#x27;tomtom/tcomment_vim&#x27;</span></span><br><span class="line"><span class="string">Plug &#x27;mattn/emmet-vim&#x27;</span></span><br><span class="line"><span class="string">Plug &#x27;elzr/vim-json&#x27;</span></span><br><span class="line"><span class="string">Plug &#x27;mxw/vim-jsx&#x27;</span></span><br><span class="line"><span class="string">Plug &#x27;ap/vim-css-color&#x27;</span></span><br><span class="line"><span class="string">Plug &#x27;leafgarland/typescript-vim&#x27;</span></span><br><span class="line"><span class="string">Plug &#x27;peitalin/vim-jsx-typescript&#x27;</span></span><br><span class="line"><span class="string">Plug &#x27;styled-components/vim-styled-components&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> JSX</span><br><span class="line"><span class="built_in">let</span> g:jsx_ext_required = 0</span><br><span class="line"><span class="built_in">let</span> g:user_emmet_settings = &#123;</span><br><span class="line">      \  <span class="string">&#x27;javascript&#x27;</span> : &#123;</span><br><span class="line">      \      <span class="string">&#x27;extends&#x27;</span> : <span class="string">&#x27;jsx&#x27;</span>,</span><br><span class="line">      \  &#125;,</span><br><span class="line">      \&#125;</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; Trailing Space</span></span><br><span class="line"><span class="string">Plug &#x27;bronson/vim-trailing-whitespace&#x27;</span></span><br><span class="line"><span class="string">&quot;</span> Removes trailing spaces</span><br><span class="line"><span class="keyword">function</span>! TrimWhiteSpace()</span><br><span class="line">  %s/\s\+$//e</span><br><span class="line">endfunction</span><br><span class="line">nnoremap &lt;silent&gt; &lt;Leader&gt;rts :call TrimWhiteSpace()&lt;CR&gt;</span><br><span class="line">autocmd FileWritePre    * :call TrimWhiteSpace()</span><br><span class="line">autocmd FileAppendPre   * :call TrimWhiteSpace()</span><br><span class="line">autocmd FilterWritePre  * :call TrimWhiteSpace()</span><br><span class="line">autocmd BufWritePre     * :call TrimWhiteSpace()</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; MultiCursor</span></span><br><span class="line"><span class="string">Plug &#x27;terryma/vim-multiple-cursors&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> MultiCursor is conflicting with deoplete</span><br><span class="line">func! Multiple_cursors_before()</span><br><span class="line">    call deoplete<span class="comment">#init#_disable()</span></span><br><span class="line">endfunc</span><br><span class="line">func! Multiple_cursors_after()</span><br><span class="line">    call deoplete<span class="comment">#init#_enable()</span></span><br><span class="line">endfunc</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; Plugins for Ruby</span></span><br><span class="line"><span class="string">Plug &#x27;vim-ruby/vim-ruby&#x27;</span></span><br><span class="line"><span class="string">Plug &#x27;tpope/vim-rails&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> Plugins <span class="keyword">for</span> Elixir</span><br><span class="line">Plug <span class="string">&#x27;elixir-lang/vim-elixir&#x27;</span></span><br><span class="line">Plug <span class="string">&#x27;slashmili/alchemist.vim&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot; All of your Plugins must be added before the following line</span></span><br><span class="line"><span class="string">call plug#end()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> Color</span><br><span class="line"><span class="built_in">set</span> t_Co=256</span><br><span class="line">syntax on</span><br><span class="line"><span class="built_in">set</span> background=dark</span><br><span class="line">colorscheme onedark</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; Line Numbers</span></span><br><span class="line"><span class="string">set relativenumber</span></span><br><span class="line"><span class="string">set number</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> Clipboard</span><br><span class="line"><span class="built_in">set</span> clipboard=unnamed</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; Make backspace work</span></span><br><span class="line"><span class="string">set backspace=2</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> Maps space to colon, time saver</span><br><span class="line">nmap &lt;space&gt; :</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; Indentation</span></span><br><span class="line"><span class="string">set tabstop=2</span></span><br><span class="line"><span class="string">set expandtab</span></span><br><span class="line"><span class="string">set shiftwidth=2</span></span><br><span class="line"><span class="string">set autoindent</span></span><br><span class="line"><span class="string">set ignorecase</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> Vim can highlight whitespaces <span class="keyword">for</span> you <span class="keyword">in</span> a convenient way:</span><br><span class="line"><span class="built_in">set</span> list</span><br><span class="line"><span class="built_in">set</span> listchars=tab:&gt;_,trail:.,extends:<span class="comment">#,nbsp:.</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot; Nav to the lastly used tab</span></span><br><span class="line"><span class="string">let g:lasttab = 1</span></span><br><span class="line"><span class="string">nmap tl :exe &quot;</span>tabn <span class="string">&quot;.g:lasttab&lt;CR&gt;</span></span><br><span class="line"><span class="string">au TabLeave * let g:lasttab = tabpagenr()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> Undo buffer</span><br><span class="line"><span class="keyword">if</span> has(<span class="string">&#x27;persistent_undo&#x27;</span>)      <span class="string">&quot;check if your vim version supports it</span></span><br><span class="line"><span class="string">  set undofile                 &quot;</span>turn on the feature</span><br><span class="line">  <span class="built_in">set</span> undodir=<span class="variable">$HOME</span>/.vim/undo  <span class="string">&quot;directory where the undo files will be stored</span></span><br><span class="line"><span class="string">endif</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> Allows <span class="keyword">for</span> mouse scrolling</span><br><span class="line"><span class="built_in">set</span> mouse=a</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; Highlight Current Line</span></span><br><span class="line"><span class="string">set cursorline</span></span><br><span class="line"><span class="string">highlight NERDTreeFile ctermfg=14</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> Highlight All Search Pattern</span><br><span class="line"><span class="built_in">set</span> hlsearch</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; Javascript syntax fix</span></span><br><span class="line"><span class="string">autocmd BufRead *.jsx set syntax=javascript</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;</span> Split remapping</span><br><span class="line">nnoremap &lt;C-j&gt; &lt;C-W&gt;&lt;C-J&gt;</span><br><span class="line">nnoremap &lt;C-k&gt; &lt;C-W&gt;&lt;C-K&gt;</span><br><span class="line">nnoremap &lt;C-l&gt; &lt;C-W&gt;&lt;C-L&gt;</span><br><span class="line">nnoremap &lt;C-h&gt; &lt;C-W&gt;&lt;C-H&gt;</span><br><span class="line"></span><br><span class="line"><span class="string">&quot; Swp file handling</span></span><br><span class="line"><span class="string">set backupdir=~/.vim/backup//</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+<h3 id="打开nvim安装插件"><a href="#打开nvim安装插件" class="headerlink" title="打开nvim安装插件"></a>打开nvim安装插件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nvim			<span class="comment"># 打开nvim</span></span><br><span class="line">:PlugInstall	<span class="comment"># 安装插件</span></span><br></pre></td></tr></table></figure>
+<p><img src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/jietu/2022-07-28_20-36.png" alt=""></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://www.zhaocai.live:8889">赵 才</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.zhaocai.live:8889/posts/ArchLinux/">http://www.zhaocai.live:8889/posts/ArchLinux/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.zhaocai.live:8889" target="_blank">赵才个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/ArchLinux/">ArchLinux</a></div><div class="post_share"><div class="social-share" data-image="http://www.zhaocai.live:8888/%E9%A3%8E%E6%99%AF/%E8%87%AA%E7%84%B6_%E7%BB%BF%E8%8D%89_%E6%B0%B4%E6%BB%B4_4K%E6%8A%A4%E7%9C%BC%E5%A3%81%E7%BA%B8_%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://fastly.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="http://www.zhaocai.live:8888/photo/%E5%BE%AE%E4%BF%A1.png" target="_blank"><img class="post-qr-code-img" src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/photo/%E5%BE%AE%E4%BF%A1.png" alt="微信打赏"/></a><div class="post-qr-code-desc">微信打赏</div></li><li class="reward-item"><a href="http://www.zhaocai.live:8888/photo/%E6%94%AF%E4%BB%98%E5%AE%9D.png" target="_blank"><img class="post-qr-code-img" src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/photo/%E6%94%AF%E4%BB%98%E5%AE%9D.png" alt="支付宝打赏"/></a><div class="post-qr-code-desc">支付宝打赏</div></li><li class="reward-item"><a href="http://www.zhaocai.live:8888/photo/%E5%8A%A0%E5%BE%AE%E4%BF%A1.png" target="_blank"><img class="post-qr-code-img" src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/photo/%E5%8A%A0%E5%BE%AE%E4%BF%A1.png" alt="微信加好友"/></a><div class="post-qr-code-desc">微信加好友</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/%E6%96%87%E7%AB%A0%E6%A0%BC%E5%BC%8F/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/%E9%A3%8E%E6%99%AF/%E5%8A%A0%E6%8B%BF%E5%A4%A7%E7%B1%B3%E8%A5%BF%E7%B4%A2%E5%8A%A0%E8%B0%B7%E5%85%AC%E5%9B%ADKariya_Park_4k%E9%A3%8E%E6%99%AF%E5%A3%81%E7%BA%B8_%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">文章格式</div></div></a></div><div class="next-post pull-right"><a href="/posts/%E5%AE%89%E5%8D%93%E6%89%8B%E6%9C%BA%E8%BD%AF%E4%BB%B6/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/imgs/4kdongman/Frostby_RuanJia4k%E5%A3%81%E7%BA%B8_%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">安卓手机软件推荐</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/photo/tou.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">赵 才</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/zhaocai-ally"><i class="fab fa-github"></i><span>主題 GitHub</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/zhaocai2599@live.cn" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">命由我作，福自己求。</div></div><div class="card-widget card-docs card-categories"><div class="item-headline"><i class="fas fa-car-side"></i><span>文檔目錄</span></div><div class="item-content"><ul class=card-category-list> <li class=card-category-list-item><a class=card-category-list-link href=/posts/21cfbf15/ >🚀 快速開始</a></li> <li class=card-category-list-item><a class=card-category-list-link href=/posts/dc584b87/ >📑 主題頁面</a></li> <li class=card-category-list-item><a class=card-category-list-link href=/posts/4aa8abbe/ >🛠 主題配置-1</a></li> <li class=card-category-list-item><a class=card-category-list-link href=/posts/ceeb73f/ >⚔️ 主題配置-2</a></li> <li class=card-category-list-item><a class=card-category-list-link href=/posts/98d20436/ >❓ 主題問答</a></li> <li class=card-category-list-item><a class=card-category-list-link href=/posts/4073eda/ >⚡️ 進階教程</a></li> <li class=card-category-list-item><a class=card-category-list-link href=/posts/198a4240/ >✨ 更新日誌</a></li> </ul></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Termux%E4%B8%ADproot-distro%E5%AE%89%E8%A3%85%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9Flinux"><span class="toc-number">1.</span> <span class="toc-text">Termux中proot-distro安装备份还原linux</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pacman%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">Pacman包管理器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Vim%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">Vim编辑器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.1.</span> <span class="toc-text">1、命令模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E6%8F%92%E5%85%A5%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.2.</span> <span class="toc-text">2、插入模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E6%9C%AB%E8%A1%8C%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.3.</span> <span class="toc-text">3、末行模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="toc-number">3.4.</span> <span class="toc-text">4、插件安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%BC%80nvim%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="toc-number">3.4.1.</span> <span class="toc-text">打开nvim安装插件</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/80%E7%AB%AF%E5%8F%A3/" title="http网站80端口无法访问解决方案"><img src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/%E9%A3%8E%E6%99%AF/%E6%A1%83%E7%BA%A2%E8%89%B2%E8%8E%B2%E8%8A%B14k%E5%A3%81%E7%BA%B8_%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="http网站80端口无法访问解决方案"/></a><div class="content"><a class="title" href="/posts/80%E7%AB%AF%E5%8F%A3/" title="http网站80端口无法访问解决方案">http网站80端口无法访问解决方案</a><time datetime="2022-08-10T01:45:04.000Z" title="发表于 2022-08-10 09:45:04">2022-08-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/%E6%96%87%E7%AB%A0%E6%A0%BC%E5%BC%8F/" title="文章格式"><img src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/%E9%A3%8E%E6%99%AF/%E5%8A%A0%E6%8B%BF%E5%A4%A7%E7%B1%B3%E8%A5%BF%E7%B4%A2%E5%8A%A0%E8%B0%B7%E5%85%AC%E5%9B%ADKariya_Park_4k%E9%A3%8E%E6%99%AF%E5%A3%81%E7%BA%B8_%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="文章格式"/></a><div class="content"><a class="title" href="/posts/%E6%96%87%E7%AB%A0%E6%A0%BC%E5%BC%8F/" title="文章格式">文章格式</a><time datetime="2022-08-07T11:37:04.000Z" title="发表于 2022-08-07 19:37:04">2022-08-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/ArchLinux/" title="ArchLinux快速上手"><img src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/%E9%A3%8E%E6%99%AF/%E8%87%AA%E7%84%B6_%E7%BB%BF%E8%8D%89_%E6%B0%B4%E6%BB%B4_4K%E6%8A%A4%E7%9C%BC%E5%A3%81%E7%BA%B8_%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ArchLinux快速上手"/></a><div class="content"><a class="title" href="/posts/ArchLinux/" title="ArchLinux快速上手">ArchLinux快速上手</a><time datetime="2022-07-28T11:43:04.000Z" title="发表于 2022-07-28 19:43:04">2022-07-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/%E5%AE%89%E5%8D%93%E6%89%8B%E6%9C%BA%E8%BD%AF%E4%BB%B6/" title="安卓手机软件推荐"><img src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/imgs/4kdongman/Frostby_RuanJia4k%E5%A3%81%E7%BA%B8_%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="安卓手机软件推荐"/></a><div class="content"><a class="title" href="/posts/%E5%AE%89%E5%8D%93%E6%89%8B%E6%9C%BA%E8%BD%AF%E4%BB%B6/" title="安卓手机软件推荐">安卓手机软件推荐</a><time datetime="2022-07-28T08:52:10.000Z" title="发表于 2022-07-28 16:52:10">2022-07-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/Git%E5%90%8C%E6%AD%A5%E6%9C%AC%E5%9C%B0%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/" title="Git同步本地项目到远程仓库"><img src= "/img/loading.gif" data-lazy-src="http://www.zhaocai.live:8888/imgs/mm/%E7%99%BD%E8%89%B2%E5%A9%9A%E7%BA%B1%E8%A3%99%E5%AD%90%E7%99%BD%E8%89%B2%E4%B8%9D%E8%A2%9C%E7%BE%8E%E8%85%BF%E7%BE%8E%E5%A5%B34k%E5%A3%81%E7%BA%B8_%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git同步本地项目到远程仓库"/></a><div class="content"><a class="title" href="/posts/Git%E5%90%8C%E6%AD%A5%E6%9C%AC%E5%9C%B0%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/" title="Git同步本地项目到远程仓库">Git同步本地项目到远程仓库</a><time datetime="2022-07-27T12:43:49.000Z" title="发表于 2022-07-27 20:43:49">2022-07-27</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('http://www.zhaocai.live:8888/%E9%A3%8E%E6%99%AF/%E8%87%AA%E7%84%B6_%E7%BB%BF%E8%8D%89_%E6%B0%B4%E6%BB%B4_4K%E6%8A%A4%E7%9C%BC%E5%A3%81%E7%BA%B8_%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2022 By 赵 才</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://gitee.com/zhaocaiall/personal-blog">Blog</a><br>
+<img src= "/img/loading.gif" data-lazy-src="/img/icp.png">
+<a href="https://beian.miit.gov.cn/" rel="external nofollow noreferrer"  style="color:#f72b07" target="_blank">浙ICP备 - 2022022645号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://fastly.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://fastly.jsdelivr.net/npm/instant.page@5/instantpage.min.js" type="module"></script><script src="https://fastly.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://fastly.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'a-8gen75ycf786bfba',
+      region: '',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'a-8gen75ycf786bfba',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('https://fastly.jsdelivr.net/npm/twikoo@1/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const getComment = () => {
+    const runTwikoo = () => {
+      twikoo.getRecentComments({
+        envId: 'a-8gen75ycf786bfba',
+        region: '',
+        pageSize: 6,
+        includeReply: true
+      }).then(function (res) {
+        const twikooArray = res.map(e => {
+          return {
+            'content': changeContent(e.comment),
+            'avatar': e.avatar,
+            'nick': e.nick,
+            'url': e.url + '#' + e.id,
+            'date': new Date(e.created).toISOString()
+          }
+        })
+
+        saveToLocal.set('twikoo-newest-comments', JSON.stringify(twikooArray), 5/(60*24))
+        generateHtml(twikooArray)
+      }).catch(function (err) {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "无法获取评论，请确认相关配置是否正确"
+      })
+    }
+
+    if (typeof twikoo === 'object') {
+      runTwikoo()
+    } else {
+      getScript('https://fastly.jsdelivr.net/npm/twikoo@1/dist/twikoo.all.min.js').then(runTwikoo)
+    }
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'data-lazy-src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+        
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('twikoo-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><div class="aplayer no-destroy" data-id="7482851759" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><script defer="defer" id="ribbon" src="https://fastly.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/aplayer@1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://fastly.jsdelivr.net/npm/aplayer@1/dist/APlayer.min.js"></script><script src="https://fastly.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://fastly.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script async src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '2');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://unpkg.zhimg.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://unpkg.zhimg.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body></html>
